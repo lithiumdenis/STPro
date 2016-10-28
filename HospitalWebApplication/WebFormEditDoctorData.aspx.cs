@@ -13,10 +13,5 @@ namespace HospitalWebApplication
         {
           
         }
-
-        protected void ButtonBackToPrevPage_Click(object sender, EventArgs e)
-        {
-            Server.Transfer("HospitalWebForm.aspx", true);
-        }
     }
 }

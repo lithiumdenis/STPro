@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormEditPatientData.aspx.cs" Inherits="HospitalWebApplication.WebFormEditPatientData" %>
+<%@ Register Src="~/MyControls/WebUserControlEditPageTop.ascx" TagPrefix="lith" TagName="TopControl"%>
 
 <!DOCTYPE html>
 
@@ -11,10 +12,7 @@
     <form id="form1" runat="server">
     <div>
     
-        <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
-
-        <br />
-        <asp:Button ID="ButtonBackToPrevPage" runat="server" OnClick="ButtonBackToPrevPage_Click" Text="Вернуться на основную страницу" Width="422px" />
+        <lith:TopControl ID ="mytop2" runat="server"></lith:TopControl>
 
     <div>
     <asp:Label ID="Label1" runat="server" Text="Произведите изменение интересующих строк таблицы ''PATIENT'':" ForeColor ="#1C5E55" Width="593px"></asp:Label>

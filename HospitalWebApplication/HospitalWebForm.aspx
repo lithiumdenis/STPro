@@ -6,17 +6,21 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <style type="text/css">
+        #form1 { 
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #006666">
     <form id="form1" runat="server">
 
     <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
 
     <div>
-    <asp:Label ID="Label1" runat="server" Text="TABLE ''DOCTOR''" ForeColor ="#1C5E55" Width="400px"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="TABLE ''DOCTOR''" ForeColor ="White" Width="400px" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
 
-    <asp:DataGrid ID="gridDoctor"   runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" OnSelectedIndexChanged="gridDoctor_SelectedIndexChanged" ForeColor="#333333" GridLines="None" Width="400px">            
+    <asp:DataGrid ID="gridDoctor"   runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" OnSelectedIndexChanged="gridDoctor_SelectedIndexChanged" ForeColor="#333333" GridLines="None" Width="400px" Font-Names="Verdana">            
         <AlternatingItemStyle BackColor="White" />
         <EditItemStyle BackColor="#7C6F57" />
         <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -26,21 +30,21 @@
         <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
     </asp:DataGrid>
 
-        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button1_Click" />
+        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button1_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
        <!-- style="position: absolute; left: 100px; top: 50px;" -->
 
-        <asp:Button ID="ButtonEditDoctor" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditDoctor_Click" />
+        <asp:Button ID="ButtonEditDoctor" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditDoctor_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
      <br />    <!-- Перенос строки-->
         <br /> 
         <br /> 
 
     <div>
-    <asp:Label ID="Label2" runat="server" Text="TABLE ''PATIENT''" ForeColor ="#1C5E55"></asp:Label>
+    <asp:Label ID="Label2" runat="server" Text="TABLE ''PATIENT''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
        
-    <asp:DataGrid ID="gridPatient" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None">
+    <asp:DataGrid ID="gridPatient" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None" Font-Names="Verdana">
         <AlternatingItemStyle BackColor="White" />
         <EditItemStyle BackColor="#7C6F57" />
         <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -50,19 +54,19 @@
         <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
         </asp:DataGrid>
 
-        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button2_Click" />
+        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button2_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
-        <asp:Button ID="ButtonEditPatient" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditPatient_Click" />
+        <asp:Button ID="ButtonEditPatient" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditPatient_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
         <br />    <!-- Перенос строки-->
         <br /> 
         <br /> 
 
     <div>
-    <asp:Label ID="Label3" runat="server" Text="TABLE ''RECEPTION''" ForeColor ="#1C5E55"></asp:Label>
+    <asp:Label ID="Label3" runat="server" Text="TABLE ''RECEPTION''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
        
-    <asp:DataGrid ID="gridReception" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None">
+    <asp:DataGrid ID="gridReception" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None" Font-Names="Verdana">
         <AlternatingItemStyle BackColor="White" />
         <EditItemStyle BackColor="#7C6F57" />
         <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -71,9 +75,9 @@
         <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
         <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
         </asp:DataGrid>
-        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button3_Click" />
+        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button3_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
-        <asp:Button ID="ButtonEditReception" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditReception_Click" />
+        <asp:Button ID="ButtonEditReception" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditReception_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
     </form>
 </body>
