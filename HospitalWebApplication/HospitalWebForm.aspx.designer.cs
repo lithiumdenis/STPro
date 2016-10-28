@@ -58,6 +58,15 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
+        /// ButtonEditDoctor элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonEditDoctor;
+        
+        /// <summary>
         /// Label2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
+        /// ButtonEditPatient элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonEditPatient;
+        
+        /// <summary>
         /// Label3 элемент управления.
         /// </summary>
         /// <remarks>
@@ -110,5 +128,14 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button3;
+        
+        /// <summary>
+        /// ButtonEditReception элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonEditReception;
     }
 }

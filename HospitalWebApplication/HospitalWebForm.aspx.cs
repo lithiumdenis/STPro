@@ -47,5 +47,20 @@ namespace HospitalWebApplication
         {
             Server.Transfer("WebFormAddData.aspx", true);
         }
+
+        protected void ButtonEditDoctor_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("WebFormEditDoctorData.aspx", true);
+        }
+
+        protected void ButtonEditPatient_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("WebFormEditPatientData.aspx", true);
+        }
+
+        protected void ButtonEditReception_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("WebFormEditReceptionData.aspx", true);
+        }
     }
 }

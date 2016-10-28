@@ -30,6 +30,8 @@
 
        <!-- style="position: absolute; left: 100px; top: 50px;" -->
 
+        <asp:Button ID="ButtonEditDoctor" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditDoctor_Click" />
+
      <br />    <!-- Перенос строки-->
         <br /> 
         <br /> 
@@ -50,6 +52,8 @@
 
         <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button2_Click" />
 
+        <asp:Button ID="ButtonEditPatient" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditPatient_Click" />
+
         <br />    <!-- Перенос строки-->
         <br /> 
         <br /> 
@@ -68,6 +72,8 @@
         <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
         </asp:DataGrid>
         <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button3_Click" />
+
+        <asp:Button ID="ButtonEditReception" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditReception_Click" />
 
     </form>
 </body>

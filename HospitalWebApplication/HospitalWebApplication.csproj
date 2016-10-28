@@ -67,6 +67,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WebFormAddData.aspx" />
+    <Content Include="WebFormEditDoctorData.aspx" />
+    <Content Include="WebFormEditPatientData.aspx" />
+    <Content Include="WebFormEditReceptionData.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreFunc.cs" />
@@ -84,6 +87,27 @@
     </Compile>
     <Compile Include="WebFormAddData.aspx.designer.cs">
       <DependentUpon>WebFormAddData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebFormEditDoctorData.aspx.cs">
+      <DependentUpon>WebFormEditDoctorData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormEditDoctorData.aspx.designer.cs">
+      <DependentUpon>WebFormEditDoctorData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebFormEditPatientData.aspx.cs">
+      <DependentUpon>WebFormEditPatientData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormEditPatientData.aspx.designer.cs">
+      <DependentUpon>WebFormEditPatientData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebFormEditReceptionData.aspx.cs">
+      <DependentUpon>WebFormEditReceptionData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormEditReceptionData.aspx.designer.cs">
+      <DependentUpon>WebFormEditReceptionData.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
