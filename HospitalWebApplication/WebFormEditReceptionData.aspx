@@ -47,12 +47,12 @@
                 <InsertParameters>
                     <asp:Parameter Name="Doctor_Id" Type="Int32" />
                     <asp:Parameter Name="Patient__Id" Type="Int32" />
-                    <asp:Parameter Name="Date" Type="String" />
+                    <asp:Parameter Name="Date" Type="DateTime" /> 
                 </InsertParameters>
                 <UpdateParameters>
                     <asp:Parameter Name="Doctor_Id" Type="Int32" />
                     <asp:Parameter Name="Patient__Id" Type="Int32" />
-                    <asp:Parameter Name="Date" Type="String" />
+                    <asp:Parameter Name="Date" Type="DateTime" />
                     <asp:Parameter Name="Id" Type="Int32" />
                 </UpdateParameters>
             </asp:SqlDataSource>
