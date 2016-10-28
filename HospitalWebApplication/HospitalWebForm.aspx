@@ -13,181 +13,61 @@
     <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
 
     <div>
-    TABLE "DOCTOR"
+    <asp:Label ID="Label1" runat="server" Text="TABLE ''DOCTOR''" ForeColor ="#1C5E55" Width="400px"></asp:Label>
     </div>
 
-    <asp:Repeater ID="rptTable" runat="server">
-            <HeaderTemplate>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                ID
-                            </td>
-                            <td>
-                                SURNAME
-                            </td>
-                            <td>
-                                NAME
-                            </td>
-                            <td>
-                                AGE
-                            </td>
-                            <td>
-                                GENDER
-                            </td>
-                            <td>
-                                POSITION
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr>
-                    <td>
-                        <%# Eval("Id") %>
-                    </td>
-                    <td>
-                        <%# Eval("Surname") %>
-                    </td>
-                    <td>
-                        <%# Eval("Name") %>
-                    </td>
-                    <td>
-                        <%# Eval("Age") %>
-                    </td>
-                    <td>
-                        <%# Eval("Gender") %>
-                    </td>
-                    <td>
-                        <%# Eval("Position") %>
-                    </td>
-                </tr>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </tbody>
-                </table>
-            </FooterTemplate>
-        </asp:Repeater>
+    <asp:DataGrid ID="gridDoctor"   runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" OnSelectedIndexChanged="gridDoctor_SelectedIndexChanged" ForeColor="#333333" GridLines="None" Width="400px">            
+        <AlternatingItemStyle BackColor="White" />
+        <EditItemStyle BackColor="#7C6F57" />
+        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+<HeaderStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True"></HeaderStyle>
+        <ItemStyle BackColor="#E3EAEB" />
+        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+    </asp:DataGrid>
+
+        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button1_Click" />
+
+       <!-- style="position: absolute; left: 100px; top: 50px;" -->
 
      <br />    <!-- Перенос строки-->
+        <br /> 
+        <br /> 
 
     <div>
-    TABLE "PATIENT"
-    <asp:Panel ID="Panel1" runat="server">
-        </asp:Panel>
+    <asp:Label ID="Label2" runat="server" Text="TABLE ''PATIENT''" ForeColor ="#1C5E55"></asp:Label>
     </div>
        
-    <asp:Repeater ID="RepeaterPatient" runat="server">
-            <HeaderTemplate>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                ID
-                            </td>
-                            <td>
-                                SURNAME
-                            </td>
-                            <td>
-                                NAME
-                            </td>
-                            <td>
-                                AGE
-                            </td>
-                            <td>
-                                GENDER
-                            </td>
-                            <td>
-                                CONTRAINDICATIONS
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr>
-                    <td>
-                        <%# Eval("Id") %>
-                    </td>
-                    <td>
-                        <%# Eval("Surname") %>
-                    </td>
-                    <td>
-                        <%# Eval("Name") %>
-                    </td>
-                    <td>
-                        <%# Eval("Age") %>
-                    </td>
-                    <td>
-                        <%# Eval("Gender") %>
-                    </td>
-                    <td>
-                        <%# Eval("Contraindications") %>
-                    </td>
-                </tr>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </tbody>
-                </table>
-            </FooterTemplate>
-        </asp:Repeater>
+    <asp:DataGrid ID="gridPatient" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None">
+        <AlternatingItemStyle BackColor="White" />
+        <EditItemStyle BackColor="#7C6F57" />
+        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+        <ItemStyle BackColor="#E3EAEB" />
+        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+        </asp:DataGrid>
+
+        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button2_Click" />
 
         <br />    <!-- Перенос строки-->
+        <br /> 
+        <br /> 
 
     <div>
-    TABLE "RECEPTION"
+    <asp:Label ID="Label3" runat="server" Text="TABLE ''RECEPTION''" ForeColor ="#1C5E55"></asp:Label>
     </div>
        
-    <asp:Repeater ID="RepeaterReception" runat="server">
-            <HeaderTemplate>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                ID
-                            </td>
-                            <td>
-                                DOCTOR_ID
-                            </td>
-                            <td>
-                                PATIENT_ID
-                            </td>
-                            <td>
-                                DATE
-                            </td>
-                            <td>
-                                TIME
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr>
-                    <td>
-                        <%# Eval("Id") %>
-                    </td>
-                    <td>
-                        <%# Eval("Doctor_Id") %>
-                    </td>
-                    <td>
-                        <%# Eval("Patient_Id") %>
-                    </td>
-                    <td>
-                        <%# Eval("Date") %>
-                    </td>
-                    <td>
-                        <%# Eval("Time") %>
-                    </td>
-                </tr>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </tbody>
-                </table>
-            </FooterTemplate>
-        </asp:Repeater>
+    <asp:DataGrid ID="gridReception" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None">
+        <AlternatingItemStyle BackColor="White" />
+        <EditItemStyle BackColor="#7C6F57" />
+        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+        <ItemStyle BackColor="#E3EAEB" />
+        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+        </asp:DataGrid>
+        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button3_Click" />
 
     </form>
 </body>
