@@ -35,17 +35,17 @@ namespace HospitalWebApplication
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            Server.Transfer("WebFormAddData.aspx", true);
+            Server.Transfer("WebFormAddNewReception.aspx", true);
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Server.Transfer("WebFormAddData.aspx", true);
+            Server.Transfer("WebFormAddNewDoctor.aspx", true);
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Server.Transfer("WebFormAddData.aspx", true);
+            Server.Transfer("WebFormAddNewPatient.aspx", true);
         }
 
         protected void ButtonEditDoctor_Click(object sender, EventArgs e)
