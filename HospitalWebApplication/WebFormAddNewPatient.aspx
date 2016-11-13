@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormAddNewPatient.aspx.cs" Inherits="HospitalWebApplication.WebFormAddNewPatient" %>
+<%@ Register Src="~/MyControls/WebUserControlEditPageTop.ascx" TagPrefix="lith" TagName="TopControl"%>
 
 <!DOCTYPE html>
 
@@ -13,6 +14,10 @@
         <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
 
         <div>
+            <lith:TopControl ID ="mytop2" runat="server"></lith:TopControl>
+        </div>
+    <div>
+
         <asp:Label ID="Label2" runat="server" Text="Добавление нового пациента:" style="font-weight: 700"></asp:Label>
     </div>
         <em>Фамилия:

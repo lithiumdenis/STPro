@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormAddNewDoctor.aspx.cs" Inherits="HospitalWebApplication.WebFormAddNewDoctor" %>
+<%@ Register Src="~/MyControls/WebUserControlEditPageTop.ascx" TagPrefix="lith" TagName="TopControl"%>
 
 <!DOCTYPE html>
 
@@ -10,6 +11,8 @@
 <body style="background-color: #99CCFF">
     <form id="form1" runat="server">
         <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
+
+        <lith:TopControl ID ="mytop2" runat="server"></lith:TopControl>
 
     <div>
     <div>

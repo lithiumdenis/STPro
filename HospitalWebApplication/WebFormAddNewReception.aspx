@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormAddNewReception.aspx.cs" Inherits="HospitalWebApplication.WebFormAddNewReception" %>
+<%@ Register Src="~/MyControls/WebUserControlEditPageTop.ascx" TagPrefix="lith" TagName="TopControl"%>
 
 <!DOCTYPE html>
 
@@ -11,7 +12,9 @@
     <form id="form1" runat="server">
     <div>
         <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
-
+        <div>
+            <lith:TopControl ID ="mytop2" runat="server"></lith:TopControl>
+        </div>
         <div>
         <asp:Label ID="Label2" runat="server" Text="Добавьте новый приём:" style="font-weight: 700"></asp:Label>
     </div>

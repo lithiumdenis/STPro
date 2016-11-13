@@ -31,6 +31,24 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
+        /// Label4 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// ddlSchema элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSchema;
+        
+        /// <summary>
         /// Label1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -46,7 +64,7 @@ namespace HospitalWebApplication {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid gridDoctor;
+        protected global::System.Web.UI.WebControls.GridView gridDoctor;
         
         /// <summary>
         /// Button1 элемент управления.
@@ -56,15 +74,6 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// ButtonEditDoctor элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonEditDoctor;
         
         /// <summary>
         /// Label2 элемент управления.
@@ -82,7 +91,7 @@ namespace HospitalWebApplication {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid gridPatient;
+        protected global::System.Web.UI.WebControls.GridView gridPatient;
         
         /// <summary>
         /// Button2 элемент управления.
@@ -92,15 +101,6 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
-        
-        /// <summary>
-        /// ButtonEditPatient элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonEditPatient;
         
         /// <summary>
         /// Label3 элемент управления.
@@ -118,7 +118,7 @@ namespace HospitalWebApplication {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid gridReception;
+        protected global::System.Web.UI.WebControls.GridView gridReception;
         
         /// <summary>
         /// Button3 элемент управления.
@@ -128,14 +128,5 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button3;
-        
-        /// <summary>
-        /// ButtonEditReception элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonEditReception;
     }
 }

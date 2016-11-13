@@ -31,6 +31,15 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
+        /// mytop2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::HospitalWebApplication.MyControls.WebUserControlEditPageTop mytop2;
+        
+        /// <summary>
         /// Label2 элемент управления.
         /// </summary>
         /// <remarks>

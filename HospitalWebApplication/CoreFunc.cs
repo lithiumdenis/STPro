@@ -9,7 +9,7 @@ using System.Data;
 
 namespace HospitalWebApplication
 {
-    public class CoreFunc
+    public class CoreFunc : System.Web.UI.Page
     {
         public static DataTable loadDataUsingDataSet(string tableName)
         {
@@ -36,6 +36,17 @@ namespace HospitalWebApplication
             return null;
         }
 
-        
+        protected string[] schemas = new string[] { "DarkSlateBlue", "Purple", "ForestGreen", "Tomato", "OrangeRed", "DeepPink" };
+
+        public string Color
+        {
+            get
+            {
+                int schemaIdx = 0;
+                if (ViewState["Schema"] != null)
+                    schemaIdx = (int)ViewState["Schema"];
+                return schemas[schemaIdx];
+            }
+        }
     }
 }

@@ -13,15 +13,6 @@ namespace HospitalWebApplication.MyControls {
     public partial class WebUserControlEditPageTop {
         
         /// <summary>
-        /// lblError элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
-        
-        /// <summary>
         /// ButtonBackToPrevPage элемент управления.
         /// </summary>
         /// <remarks>

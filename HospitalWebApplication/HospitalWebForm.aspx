@@ -6,57 +6,80 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <style type="text/css">
-        #form1 { 
-        }
+    <style>
+        body {
+            background-color: <%=Color%>;
+        } 
     </style>
 </head>
-<body style="background-color: #006666">
+<body >
     <form id="form1" runat="server">
 
     <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
-
+    <asp:Label ID="Label4" runat="server" Text="Фоновый цвет: " ForeColor ="White" Width="450px" Font-Names="Franklin Gothic Medium"></asp:Label> <asp:DropDownList ID="ddlSchema" runat="server" AutoPostBack="true"></asp:DropDownList>
     <div>
     <asp:Label ID="Label1" runat="server" Text="TABLE ''DOCTOR''" ForeColor ="White" Width="400px" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
 
-    <asp:DataGrid ID="gridDoctor"   runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" OnSelectedIndexChanged="gridDoctor_SelectedIndexChanged" ForeColor="#333333" GridLines="None" Width="400px" Font-Names="Verdana">            
-        <AlternatingItemStyle BackColor="White" />
-        <EditItemStyle BackColor="#7C6F57" />
-        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-<HeaderStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True"></HeaderStyle>
-        <ItemStyle BackColor="#E3EAEB" />
-        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-    </asp:DataGrid>
+        <asp:GridView ID="gridDoctor" runat="server" OnRowDeleting="gridDoctor_RowDeleting" OnRowEditing="gridDoctor_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
 
-        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button1_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+            <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
+                <asp:BoundField DataField="Surname" HeaderText="Surname" SortExpression="Surname" />
+                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                <asp:BoundField DataField="Age" HeaderText="Age" SortExpression="Age" />
+                <asp:BoundField DataField="Gender" HeaderText="Gender" SortExpression="Gender" />
+                <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />
+            </Columns>
+            <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
+                            <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
+                            <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
+                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <SortedAscendingCellStyle BackColor="#F4F4FD" />
+                            <SortedAscendingHeaderStyle BackColor="#5A4C9D" />
+                            <SortedDescendingCellStyle BackColor="#D8D8F0" />
+                            <SortedDescendingHeaderStyle BackColor="#3E3277" />
+
+        </asp:GridView>
+
+        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button1_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
        <!-- style="position: absolute; left: 100px; top: 50px;" -->
 
-        <asp:Button ID="ButtonEditDoctor" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditDoctor_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
-
      <br />    <!-- Перенос строки-->
-        <br /> 
-        <br /> 
+     <br /> 
+     <br /> 
 
     <div>
     <asp:Label ID="Label2" runat="server" Text="TABLE ''PATIENT''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
-       
-    <asp:DataGrid ID="gridPatient" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None" Font-Names="Verdana">
-        <AlternatingItemStyle BackColor="White" />
-        <EditItemStyle BackColor="#7C6F57" />
-        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-        <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-        <ItemStyle BackColor="#E3EAEB" />
-        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-        </asp:DataGrid>
 
-        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button2_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+    <asp:GridView ID="gridPatient" runat="server" OnRowDeleting="gridPatient_RowDeleting" OnRowEditing="gridPatient_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
 
-        <asp:Button ID="ButtonEditPatient" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditPatient_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+            <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
+                <asp:BoundField DataField="Surname" HeaderText="Surname" SortExpression="Surname" />
+                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                <asp:BoundField DataField="Age" HeaderText="Age" SortExpression="Age" />
+                <asp:BoundField DataField="Gender" HeaderText="Gender" SortExpression="Gender" />
+                <asp:BoundField DataField="Contraindications" HeaderText="Contraindications" SortExpression="Contraindications" />
+            </Columns>
+            <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
+                            <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
+                            <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
+                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <SortedAscendingCellStyle BackColor="#F4F4FD" />
+                            <SortedAscendingHeaderStyle BackColor="#5A4C9D" />
+                            <SortedDescendingCellStyle BackColor="#D8D8F0" />
+                            <SortedDescendingHeaderStyle BackColor="#3E3277" />
+
+        </asp:GridView>
+
+        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button2_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
         <br />    <!-- Перенос строки-->
         <br /> 
@@ -66,19 +89,30 @@
     <asp:Label ID="Label3" runat="server" Text="TABLE ''RECEPTION''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
        
-    <asp:DataGrid ID="gridReception" runat="server" AllowSorting="True" CellPadding="4" DataKeyNames="Id" EmptyDataText="---" HeaderStyle-BackColor ="Purple" HeaderStyle-ForeColor ="White" ForeColor="#333333" GridLines="None" Font-Names="Verdana">
-        <AlternatingItemStyle BackColor="White" />
-        <EditItemStyle BackColor="#7C6F57" />
-        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-        <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-        <ItemStyle BackColor="#E3EAEB" />
-        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-        <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-        </asp:DataGrid>
-        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="Button3_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+        <asp:GridView ID="gridReception" runat="server" OnRowDeleting="gridReception_RowDeleting" OnRowEditing="gridReception_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
 
-        <asp:Button ID="ButtonEditReception" runat="server" Text="EDIT DATA" BackColor ="#1C5E55" ForeColor ="White" OnClick="ButtonEditReception_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+            <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
+                <asp:BoundField DataField="Doctor_Id" HeaderText="Doctor_Id" SortExpression="Doctor_Id" />
+                <asp:BoundField DataField="Patient_Id" HeaderText="Patient_Id" SortExpression="Patient_Id" />
+                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
+            </Columns>
+            <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
+                            <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
+                            <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
+                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
+                            <SortedAscendingCellStyle BackColor="#F4F4FD" />
+                            <SortedAscendingHeaderStyle BackColor="#5A4C9D" />
+                            <SortedDescendingCellStyle BackColor="#D8D8F0" />
+                            <SortedDescendingHeaderStyle BackColor="#3E3277" />
 
+        </asp:GridView>
+
+        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button3_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+
+        
     </form>
 </body>
 </html>
