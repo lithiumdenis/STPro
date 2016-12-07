@@ -11,8 +11,44 @@
             background-color: <%=Color%>;
         } 
     </style>
+
+    <script type="text/javascript" src="Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="MyScripts/errorHandling.js"></script>
+    <script type="text/javascript" src="MyScripts/TemplateLoader.js"></script>
+    
 </head>
 <body >
+
+    <script type="text/javascript">
+        var rootURL = "<%=Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Authority%>";
+        templateLoader.registerTemplate('errorMessage', rootURL + '/Templates/error.html');
+
+        function hideAfter(selector, sec) {
+            setTimeout(function () {
+                $(selector).hide(1000);
+            }, sec * 1000);
+        }
+
+        $(function () {
+            
+            
+
+
+        });
+
+        $.ajax(
+        {
+            function (result) {
+                processError(result, '.errorContainer');
+            }
+        })
+
+
+
+    </script>
+
+
     <form id="form1" runat="server">
 
     <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>

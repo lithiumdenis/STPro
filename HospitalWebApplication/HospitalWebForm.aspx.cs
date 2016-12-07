@@ -16,6 +16,9 @@ namespace HospitalWebApplication
             var datass = CoreFunc.loadDataUsingDataSet("Doctor");
             //var a = datass.Rows[0];
             //datass.Rows.Add(null, "blah", "blah", 34, "Male", "blah");
+            //datass.Rows.Add(null, null, null, "ololo", null, null);
+
+
 
             gridDoctor.DataSource = datass;
             gridDoctor.DataBind();
@@ -33,6 +36,9 @@ namespace HospitalWebApplication
             }
 
             ddlSchema.SelectedIndexChanged += DdlSchema_SelectedIndexChanged;
+
+            
+
         }
 
         private void DdlSchema_SelectedIndexChanged(object sender, EventArgs e)

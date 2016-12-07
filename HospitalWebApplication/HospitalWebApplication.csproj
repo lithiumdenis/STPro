@@ -85,6 +85,15 @@
     </Content>
     <Content Include="HospitalWebForm.aspx" />
     <Content Include="MyControls\WebUserControlEditPageTop.ascx" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="MyScripts\errorHandling.js" />
+    <Content Include="MyScripts\TemplateLoader.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.tmpl.js" />
+    <Content Include="Templates\error.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -166,6 +175,8 @@
     <Content Include="HospitalEntityFrameworkModel.edmx.diagram">
       <DependentUpon>HospitalEntityFrameworkModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -175,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
