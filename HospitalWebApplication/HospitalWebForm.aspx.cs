@@ -18,8 +18,6 @@ namespace HospitalWebApplication
             //datass.Rows.Add(null, "blah", "blah", 34, "Male", "blah");
             //datass.Rows.Add(null, null, null, "ololo", null, null);
 
-
-
             gridDoctor.DataSource = datass;
             gridDoctor.DataBind();
 
@@ -33,11 +31,22 @@ namespace HospitalWebApplication
             {
                 ddlSchema.DataSource = schemas;
                 ddlSchema.DataBind();
+
+                //ClientScript.RegisterStartupScript(this.GetType(), "HideOnPostback", "$(function() { run(); })", true);
+
+            }
+
+            //if(Page.IsPostBack)
+                //ClientScript.RegisterStartupScript(this.GetType(), "HideOnPostback", "$(function() { run(); })", false);
+
+            if (!IsPostBack)
+            {
+                // NOTE: the following uses an overload of RegisterClientScriptBlock() 
+                // that will surround our string with the needed script tags 
+                //ClientScript.RegisterClientScriptBlock(GetType(), "IsPostBack", "var isNotPostBack = true;", true);
             }
 
             ddlSchema.SelectedIndexChanged += DdlSchema_SelectedIndexChanged;
-
-            
 
         }
 
@@ -196,6 +205,24 @@ namespace HospitalWebApplication
             string transferPath = "WebFormAddNewReception.aspx?id=" + realID;
 
             Response.Redirect(transferPath);
+        }
+
+        protected void gridDoctor_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridDoctor.PageIndex = e.NewPageIndex;
+            gridDoctor.DataBind();
+        }
+
+        protected void gridPatient_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridPatient.PageIndex = e.NewPageIndex;
+            gridPatient.DataBind();
+        }
+
+        protected void gridReception_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridReception.PageIndex = e.NewPageIndex;
+            gridReception.DataBind();
         }
     }
 }

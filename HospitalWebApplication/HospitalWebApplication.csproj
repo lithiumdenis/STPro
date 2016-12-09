@@ -84,9 +84,12 @@
       <LastGenOutput>HospitalEntityFrameworkModel.cs</LastGenOutput>
     </Content>
     <Content Include="HospitalWebForm.aspx" />
+    <Content Include="Images\autumn.jpg" />
+    <Content Include="Images\night.jpg" />
     <Content Include="MyControls\WebUserControlEditPageTop.ascx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="MyScripts\errorHandling.js" />
+    <Content Include="MyScripts\rainyday.js" />
     <Content Include="MyScripts\TemplateLoader.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
