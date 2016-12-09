@@ -58,15 +58,6 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// gridDoctor элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridDoctor;
-        
-        /// <summary>
         /// Button1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// gridDoctor элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridDoctor;
         
         /// <summary>
         /// Label2 элемент управления.
@@ -85,15 +85,6 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// gridPatient элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridPatient;
-        
-        /// <summary>
         /// Button2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -101,6 +92,15 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// gridPatient элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridPatient;
         
         /// <summary>
         /// Label3 элемент управления.
@@ -112,15 +112,6 @@ namespace HospitalWebApplication {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// gridReception элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridReception;
-        
-        /// <summary>
         /// Button3 элемент управления.
         /// </summary>
         /// <remarks>
@@ -128,5 +119,14 @@ namespace HospitalWebApplication {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button3;
+        
+        /// <summary>
+        /// gridReception элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridReception;
     }
 }

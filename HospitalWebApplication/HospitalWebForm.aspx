@@ -21,8 +21,10 @@
 <body >
 
     <script type="text/javascript">
+        
+        
         var rootURL = "<%=Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Authority%>";
-        templateLoader.registerTemplate('errorMessage', rootURL + '/Templates/error.html');
+        /*templateLoader.registerTemplate('errorMessage', rootURL + '/Templates/error.html');
 
         function hideAfter(selector, sec) {
             setTimeout(function () {
@@ -30,11 +32,10 @@
             }, sec * 1000);
         }
 
+        
         $(function () {
             
-            
-
-
+           
         });
 
         $.ajax(
@@ -43,8 +44,8 @@
                 processError(result, '.errorContainer');
             }
         })
-
-
+        */
+       
 
     </script>
 
@@ -53,14 +54,27 @@
 
     <asp:Label id="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
     <asp:Label ID="Label4" runat="server" Text="Фоновый цвет: " ForeColor ="White" Width="450px" Font-Names="Franklin Gothic Medium"></asp:Label> <asp:DropDownList ID="ddlSchema" runat="server" AutoPostBack="true"></asp:DropDownList>
-    <div>
+    
+
+
+
+
+     <table >
+         <tr>
+             <td width="450" valign="top">
+
+        
+        <div>
     <asp:Label ID="Label1" runat="server" Text="TABLE ''DOCTOR''" ForeColor ="White" Width="400px" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
 
-        <asp:GridView ID="gridDoctor" runat="server" OnRowDeleting="gridDoctor_RowDeleting" OnRowEditing="gridDoctor_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
+        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button1_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+
+
+        <asp:GridView ID="gridDoctor" runat="server" OnRowDeleting="gridDoctor_RowDeleting" OnRowEditing="gridDoctor_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None" Font-Size="X-Small">
 
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Link" ControlStyle-BorderColor="Purple" ControlStyle-Font-Overline="false" ControlStyle-Font-Underline="false" ControlStyle-Font-Bold="true"  ControlStyle-Font-Size="X-Small" />                
                 <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
                 <asp:BoundField DataField="Surname" HeaderText="Surname" SortExpression="Surname" />
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -80,22 +94,30 @@
 
         </asp:GridView>
 
-        <asp:Button ID="Button1" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button1_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
-       <!-- style="position: absolute; left: 100px; top: 50px;" -->
+       <!-- style="position: absolute; left: 100px; top: 50px;" 
+           -->
 
      <br />    <!-- Перенос строки-->
      <br /> 
      <br /> 
 
+
+                 </td>
+                 <td width="450" valign="top">
+
+
     <div>
     <asp:Label ID="Label2" runat="server" Text="TABLE ''PATIENT''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
 
-    <asp:GridView ID="gridPatient" runat="server" OnRowDeleting="gridPatient_RowDeleting" OnRowEditing="gridPatient_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
+        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button2_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+
+
+    <asp:GridView ID="gridPatient" runat="server" OnRowDeleting="gridPatient_RowDeleting" OnRowEditing="gridPatient_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None" Font-Size="X-Small">
 
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Link" ControlStyle-BorderColor="Purple" ControlStyle-Font-Overline="false" ControlStyle-Font-Underline="false" ControlStyle-Font-Bold="true"  ControlStyle-Font-Size="X-Small" />
                 <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
                 <asp:BoundField DataField="Surname" HeaderText="Surname" SortExpression="Surname" />
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -115,20 +137,27 @@
 
         </asp:GridView>
 
-        <asp:Button ID="Button2" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button2_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
         <br />    <!-- Перенос строки-->
         <br /> 
         <br /> 
 
+
+                     </td>
+                     <td width="450" valign="top">
+
+
     <div>
     <asp:Label ID="Label3" runat="server" Text="TABLE ''RECEPTION''" ForeColor ="White" Font-Names="Franklin Gothic Medium"></asp:Label>
     </div>
+
+        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button3_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
+
        
-        <asp:GridView ID="gridReception" runat="server" OnRowDeleting="gridReception_RowDeleting" OnRowEditing="gridReception_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None">
+        <asp:GridView ID="gridReception" runat="server" OnRowDeleting="gridReception_RowDeleting" OnRowEditing="gridReception_RowEditing" AllowSorting="false" AutoGenerateColumns="false" BackColor="White" BorderColor="#E7E7FF" BorderWidth="1px" CellPadding="4" DataKeyNames="Id" EmptyDataText="Нет записей для отображения." GridLines="Horizontal" BorderStyle="None" Font-Size="X-Small">
 
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Button" ControlStyle-BorderColor="Purple" ControlStyle-BackColor="White" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="False" ButtonType="Link" ControlStyle-BorderColor="Purple" ControlStyle-Font-Overline="false" ControlStyle-Font-Underline="false" ControlStyle-Font-Bold="true"  ControlStyle-Font-Size="X-Small" />
                 <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
                 <asp:BoundField DataField="Doctor_Id" HeaderText="Doctor_Id" SortExpression="Doctor_Id" />
                 <asp:BoundField DataField="Patient_Id" HeaderText="Patient_Id" SortExpression="Patient_Id" />
@@ -146,8 +175,11 @@
 
         </asp:GridView>
 
-        <asp:Button ID="Button3" runat="server" Text="ADD DATA" BackColor ="#333399" ForeColor ="White" OnClick="Button3_Click" BorderColor="White" Font-Names="Franklin Gothic Medium" />
 
+
+             </td>
+             </tr>
+          </table>
         
     </form>
 </body>
