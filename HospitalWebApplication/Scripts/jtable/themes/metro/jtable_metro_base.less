@@ -158,33 +158,6 @@
                     .opacity(1);
                 }
             }
-
-			// Toolbar -------------------------------------------------------------
-
-			div.jtable-toolbar
-			{
-				.dock(bottom-right);
-
-				span.jtable-toolbar-item
-				{
-					background-color: @table-title-background + #0A0A0A;
-					color: white;
-
-					&.jtable-toolbar-item-add-record
-					{
-						span.jtable-toolbar-item-icon
-						{
-							background-image: url('metro/add.png');
-						}
-					}
-
-					&.jtable-toolbar-item-hover
-					{
-						background-color: @main-theme-color - #111;
-						padding-bottom: 6px;
-					}
-				}
-			}
         }
 
 		// Table ---------------------------------------------------------------
@@ -332,7 +305,7 @@
                     {
                         > td
                         {
-                            padding: 2px;
+                            padding: 0px;
                             background-color: #fff;
                         }
                     }
@@ -340,7 +313,7 @@
             }
         }
 
-		// Bottom panel --------------------------------------------------------------
+		// Footer --------------------------------------------------------------
 
         > div.jtable-bottom-panel
         {
@@ -384,36 +357,28 @@
                         background-color: @table-bottom-panel-background + #333;
                     }
 
-                .jtable-page-number-disabled
-                {					
-					.opacity(0.75);
+                .jtable-page-number-active
+                {
                     color: #ccc;
                     cursor: default;
+                }
 
-					&:hover
-					{
-						background-color: @table-bottom-panel-background + #111;
-					}
+                .jtable-page-info
+                {
+					margin-left: 5px;
+					padding: 2px;
                 }
             }
 
-			span.jtable-page-info
+            span.jtable-add-record
             {
-				display: inline-block;
-				padding: 4px;				
-            }
+                margin: 4px;
 
-			span.jtable-page-size-change
-            {
-				display:inline-block;
-                padding:2px 0px 2px 0px;
+                a
+                {
+                    color: #fff;
+                }
             }
-
-			span.jtable-goto-page
-			{
-				display:inline-block;
-                padding:2px 0px 2px 0px;
-			}
         }
     }
 

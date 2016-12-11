@@ -1,6 +1,6 @@
 ﻿/*
-    jTable localization file for 'Lithuanian' language.
-    Author: Vygandas Šimkus
+   jTable localization file for 'Lithuanian' language.
+   Author: Vygandas Šimkus
 */
 (function ($) {
 
@@ -22,9 +22,7 @@
         cannotLoadOptionsFor: 'Nepavyko užkrauti "{0}" pasirinkimo!',
         pagingInfo: '{0}-{1} iš {2}',
         canNotDeletedRecords: 'Nepavyko pašalinti {0} iš {1} įrašų!',
-        deleteProggress: 'Šalinamas {0} iš {1} įrašų, prašome palaukti...',
-        pageSizeChangeLabel: 'Row count', //New. Must be localized.
-        gotoPageLabel: 'Go to page' //New. Must be localized.
+        deleteProggress: 'Šalinamas {0} iš {1} įrašų, prašome palaukti...'
     });
 
 })(jQuery);

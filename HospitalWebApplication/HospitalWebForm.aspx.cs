@@ -15,47 +15,60 @@ namespace HospitalWebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var datass = CoreFunc.loadDataUsingDataSet("Doctor");
-            //var a = datass.Rows[0];
-            //datass.Rows.Add(null, "blah", "blah", 34, "Male", "blah");
-            //datass.Rows.Add(null, null, null, "ololo", null, null);
+            //var datass = CoreFunc.loadDataUsingDataSet("Doctor");
+            ////var a = datass.Rows[0];
+            ////datass.Rows.Add(null, "blah", "blah", 34, "Male", "blah");
+            ////datass.Rows.Add(null, null, null, "ololo", null, null);
 
-            gridDoctor.DataSource = datass;
-            gridDoctor.DataBind();
+            //gridDoctor.DataSource = datass;
+            //gridDoctor.DataBind();
 
-            gridPatient.DataSource = CoreFunc.loadDataUsingDataSet("Patient");
-            gridPatient.DataBind();
+            //gridPatient.DataSource = CoreFunc.loadDataUsingDataSet("Patient");
+            //gridPatient.DataBind();
 
-            gridReception.DataSource = CoreFunc.loadDataUsingDataSet("Reception");
-            gridReception.DataBind();
+            //gridReception.DataSource = CoreFunc.loadDataUsingDataSet("Reception");
+            //gridReception.DataBind();
 
-            if (!IsPostBack)
-            {
-                ddlSchema.DataSource = schemas;
-                ddlSchema.DataBind();
-
-            }
-
-            ddlSchema.SelectedIndexChanged += DdlSchema_SelectedIndexChanged;
+            //if (!IsPostBack)
+            //{
+                
+            //}
         }
 
+        #region Doctor methods
 
-        ////Изменение записей в Doctor
-        //[WebMethod(EnableSession = true)]
-        //public static object UpdateDoctor(Doctor record)
-        //{
-        //    try
-        //    {
-        //        //Repository.StudentRepository.UpdateStudent(record);
-        //        return new { Result = "OK" };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new { Result = "ERROR", Message = ex.Message };
-        //    }
-        //}
+        //Изменение записей в Doctor
+        [WebMethod(EnableSession = true)]
+        public static object UpdateDoctor(Doctor record)
+        {
+            try
+            {
+                string queryStringDelete = "UPDATE [Doctor] SET [Surname] = @Surname, [Name] = @Name, [Age] = @Age, [Gender] = @Gender, [Position] = @Position WHERE [Id] = @Id";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    c.Open();
 
+                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    {
+                        //Добавить параметры
+                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
+                        commandUpdate.Parameters.AddWithValue("@Surname", record.Surname);
+                        commandUpdate.Parameters.AddWithValue("@Name", record.Name);
+                        commandUpdate.Parameters.AddWithValue("@Age", record.Age);
+                        commandUpdate.Parameters.AddWithValue("@Gender", record.Gender);
+                        commandUpdate.Parameters.AddWithValue("@Position", record.Position);
 
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK" };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
 
         //Добавление записей в Doctor
         [WebMethod(EnableSession = true)]
@@ -63,8 +76,7 @@ namespace HospitalWebApplication
         {
             try
             {
-                var addedDoctor = record;//Repository.StudentRepository.AddStudent(record);
-
+                var addedDoctor = record;
 
                 using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
                 {
@@ -107,7 +119,7 @@ namespace HospitalWebApplication
             }
         }
 
-        //Удаление записей из Doctor -----не работает
+        //Удаление записей из Doctor
         [WebMethod(EnableSession = true)]
         public static object DeleteDoctor(int Id)
         {
@@ -239,179 +251,159 @@ namespace HospitalWebApplication
             return CountOfDoctors;
         }
 
-        private void DdlSchema_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ViewState["Schema"] = ddlSchema.SelectedIndex;
-        }
+        #endregion
 
-        protected void Button3_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WebFormAddNewReception.aspx");
-        }
+        //protected void Button3_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("WebFormAddNewReception.aspx");
+        //}
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WebFormAddNewDoctor.aspx");
-        }
+        //protected void Button1_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("WebFormAddNewDoctor.aspx");
+        //}
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WebFormAddNewPatient.aspx");
-        }
+        //protected void Button2_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("WebFormAddNewPatient.aspx");
+        //}
 
-        protected void gridDoctor_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Doctor");
-            var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
+        //protected void gridDoctor_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Doctor");
+        //    var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
 
-            int id = Convert.ToInt32(a[0]);
+        //    int id = Convert.ToInt32(a[0]);
 
-            try
-            {
-                string queryStringDelete = "DELETE FROM [Doctor] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
-                    c.Open();
+        //    try
+        //    {
+        //        string queryStringDelete = "DELETE FROM [Doctor] WHERE [Id] = @Id";
+        //        using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+        //        {
+        //            c.Open();
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", id);
+        //            using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+        //            {
+        //                //Добавить параметры
+        //                commandUpdate.Parameters.AddWithValue("@Id", id);
 
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
+        //                commandUpdate.ExecuteNonQuery();
+        //            }
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+        //    }
             
-            gridDoctor.DataSource = CoreFunc.loadDataUsingDataSet("Doctor");
-            gridDoctor.DataBind();
-        }
+        //    gridDoctor.DataSource = CoreFunc.loadDataUsingDataSet("Doctor");
+        //    gridDoctor.DataBind();
+        //}
 
-        protected void gridDoctor_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Doctor");
-            var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
-            string realID = a[0].ToString();
+        //protected void gridDoctor_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Doctor");
+        //    var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
+        //    string realID = a[0].ToString();
 
-            string transferPath = "WebFormAddNewDoctor.aspx?id=" + realID;
+        //    string transferPath = "WebFormAddNewDoctor.aspx?id=" + realID;
 
-            Response.Redirect(transferPath);
-        }
+        //    Response.Redirect(transferPath);
+        //}
 
-        protected void gridPatient_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Patient");
-            var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
+        //protected void gridPatient_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Patient");
+        //    var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
 
-            int id = Convert.ToInt32(a[0]);
+        //    int id = Convert.ToInt32(a[0]);
 
-            try
-            {
-                string queryStringDelete = "DELETE FROM [Patient] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
-                    c.Open();
+        //    try
+        //    {
+        //        string queryStringDelete = "DELETE FROM [Patient] WHERE [Id] = @Id";
+        //        using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+        //        {
+        //            c.Open();
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", id);
+        //            using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+        //            {
+        //                //Добавить параметры
+        //                commandUpdate.Parameters.AddWithValue("@Id", id);
 
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
+        //                commandUpdate.ExecuteNonQuery();
+        //            }
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+        //    }
 
-            gridPatient.DataSource = CoreFunc.loadDataUsingDataSet("Patient");
-            gridPatient.DataBind();
-        }
+        //    gridPatient.DataSource = CoreFunc.loadDataUsingDataSet("Patient");
+        //    gridPatient.DataBind();
+        //}
 
-        protected void gridPatient_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Patient");
-            var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
-            string realID = a[0].ToString();
+        //protected void gridPatient_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Patient");
+        //    var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
+        //    string realID = a[0].ToString();
 
-            string transferPath = "WebFormAddNewPatient.aspx?id=" + realID;
+        //    string transferPath = "WebFormAddNewPatient.aspx?id=" + realID;
 
-            Response.Redirect(transferPath);
+        //    Response.Redirect(transferPath);
 
-        }
+        //}
 
-        protected void gridReception_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Reception");
-            var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
+        //protected void gridReception_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Reception");
+        //    var a = datass.Rows[e.RowIndex];                            //При сортировке это приводит к ошибке
 
-            int id = Convert.ToInt32(a[0]);
+        //    int id = Convert.ToInt32(a[0]);
 
-            try
-            {
-                string queryStringDelete = "DELETE FROM [Reception] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
-                    c.Open();
+        //    try
+        //    {
+        //        string queryStringDelete = "DELETE FROM [Reception] WHERE [Id] = @Id";
+        //        using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+        //        {
+        //            c.Open();
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", id);
+        //            using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+        //            {
+        //                //Добавить параметры
+        //                commandUpdate.Parameters.AddWithValue("@Id", id);
 
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
+        //                commandUpdate.ExecuteNonQuery();
+        //            }
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+        //    }
 
-            gridReception.DataSource = CoreFunc.loadDataUsingDataSet("Reception");
-            gridReception.DataBind();
+        //    gridReception.DataSource = CoreFunc.loadDataUsingDataSet("Reception");
+        //    gridReception.DataBind();
 
-        }
+        //}
 
-        protected void gridReception_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            //Получаем полноценный ID из места положения в таблице
-            var datass = CoreFunc.loadDataUsingDataSet("Reception");
-            var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
-            string realID = a[0].ToString();
+        //protected void gridReception_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //    //Получаем полноценный ID из места положения в таблице
+        //    var datass = CoreFunc.loadDataUsingDataSet("Reception");
+        //    var a = datass.Rows[e.NewEditIndex];                        //При сортировке это приводит к ошибке
+        //    string realID = a[0].ToString();
 
-            string transferPath = "WebFormAddNewReception.aspx?id=" + realID;
+        //    string transferPath = "WebFormAddNewReception.aspx?id=" + realID;
 
-            Response.Redirect(transferPath);
-        }
+        //    Response.Redirect(transferPath);
+        //}
 
-        protected void gridDoctor_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gridDoctor.PageIndex = e.NewPageIndex;
-            gridDoctor.DataBind();
-        }
-
-        protected void gridPatient_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gridPatient.PageIndex = e.NewPageIndex;
-            gridPatient.DataBind();
-        }
-
-        protected void gridReception_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gridReception.PageIndex = e.NewPageIndex;
-            gridReception.DataBind();
-        }
     }
 }

@@ -141,48 +141,6 @@
             {
                 .dock(right);
             }
-
-			// Toolbar -------------------------------------------------------------
-
-			div.jtable-toolbar
-			{
-				.dock(bottom-right);
-
-				display: inline-block;
-				margin-right: 5px;
-
-				span.jtable-toolbar-item
-				{
-					position: relative;
-					display: inline-block;
-					margin: 0px 0px 0px 5px;
-					cursor: pointer;
-					font-size: 0.9em;
-					padding: 2px;
-					vertical-align: bottom;
-
-					span.jtable-toolbar-item-icon
-					{
-						display: inline-block;
-						margin: 2px;
-						vertical-align: middle;
-						width: 16px;
-						height: 16px;
-					}
-
-					span.jtable-toolbar-item-text
-					{
-						display: inline-block;
-						margin: 2px;
-						vertical-align: middle;
-					}
-				}
-			}
-
-			.jtable-close-button+div.jtable-toolbar
-			{
-				margin-right: 30px;
-			}
         }
 
         table.jtable
@@ -298,11 +256,15 @@
             }
         }
 
-        > div.jtable-bottom-panel
+        div.jtable-bottom-panel
         {
             position: relative;
             min-height: 24px;
-			text-align: left;
+
+            div.jtable-left-area
+            {
+                .dock(left);
+            }
 
             div.jtable-right-area
             {
@@ -327,39 +289,40 @@
                 }
 
                 .jtable-page-number-space,
-                .jtable-page-number-active,
-				.jtable-page-number-disabled
+                .jtable-page-number-active
                 {
                     cursor: default;
                 }
+
+                .jtable-page-info
+                {
+                    display: inline-block;
+                    margin-left: 5px;
+                    padding: 2px;
+                }
             }
 
-            span.jtable-page-size-change
+            span.jtable-add-record
             {
-                margin-left: 5px;
+                display: inline-block;
+
+                a
+                {
+                    text-decoration: none;
+
+                    &:hover
+                    {
+                        text-decoration: underline;
+                    }
+                }
             }
-
-			span.jtable-goto-page
-			{
-                margin-left: 5px;
-
-				input[type=text]
-				{
-					width:22px;
-				}
-			}
-
-			span.jtable-page-info
-			{
-				vertical-align: middle;
-			}
         }
 
         div.jtable-column-resize-bar
         {
             .opacity(0.5);
-            position: absolute;
-            display: none;
+			position: absolute;
+			display: none;
             width: 1px;
             background-color: #000;
         }
@@ -489,11 +452,6 @@
         z-index: 998;
         position: absolute;
         background-color: #000;
-
-		&.jtable-busy-panel-background-invisible
-		{
-			background-color: transparent;
-		}
     }
 
     div.jtable-busy-message
@@ -502,6 +460,9 @@
         z-index: 999;
         position: absolute;
         margin: 5px;
+        font-size: 1.25em;
+        color: #000;
+        background-color: #ddd;
     }
 
     div.jtable-contextmenu-overlay

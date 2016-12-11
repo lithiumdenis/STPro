@@ -8,7 +8,7 @@
         serverCommunicationError: 'Sunucu ile iletişim kurulurken bir hata oluştu.',
         loadingMessage: 'Kayıtlar yükleniyor...',
         noDataAvailable: 'Hiç kayıt bulunmamaktadır!',
-        addNewRecord: 'Yeni kayıt ekle',
+        addNewRecord: '+ Yeni kayıt ekle',
         editRecord: 'Kayıt düzenle',
         areYouSure: 'Emin misiniz?',
         deleteConfirmation: 'Bu kayıt silinecektir. Emin misiniz?',
@@ -20,11 +20,9 @@
         error: 'Hata',
         close: 'Kapat',
         cannotLoadOptionsFor: '{0} alanı için seçenekler yüklenemedi!',
-        pagingInfo: 'Görterilen: {0}-{1}, Toplam: {2}',
+        pagingInfo: 'Toplam {2}, {0} ile {1} arası gösteriliyor',
         canNotDeletedRecords: '{1} kayıttan {0} adedi silinemedi!',
-        deleteProggress: '{1} kayıttan {0} adedi silindi, devam ediliyor...',
-        pageSizeChangeLabel: 'Satır sayısı',
-        gotoPageLabel: 'Sayfaya git'
+        deleteProggress: '{1} kayıttan {0} adedi silindi, devam ediliyor...'
     });
 
 })(jQuery);
