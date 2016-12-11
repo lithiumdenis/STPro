@@ -15,25 +15,434 @@ namespace HospitalWebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //var datass = CoreFunc.loadDataUsingDataSet("Doctor");
-            ////var a = datass.Rows[0];
-            ////datass.Rows.Add(null, "blah", "blah", 34, "Male", "blah");
-            ////datass.Rows.Add(null, null, null, "ololo", null, null);
-
-            //gridDoctor.DataSource = datass;
-            //gridDoctor.DataBind();
-
-            //gridPatient.DataSource = CoreFunc.loadDataUsingDataSet("Patient");
-            //gridPatient.DataBind();
-
-            //gridReception.DataSource = CoreFunc.loadDataUsingDataSet("Reception");
-            //gridReception.DataBind();
-
-            //if (!IsPostBack)
-            //{
-                
-            //}
+            
         }
+
+        #region Reception methods
+
+        //Изменение записей в Reception
+        [WebMethod(EnableSession = true)]
+        public static object UpdateReception(Reception record)
+        {
+            try
+            {
+                string queryStringDelete = "UPDATE [Reception] SET [Doctor_Id] = @Doctor_Id, [Patient_Id] = @Patient_Id WHERE [Id] = @Id";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    c.Open();
+
+                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    {
+                        //Добавить параметры
+                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
+                        commandUpdate.Parameters.AddWithValue("@Doctor_Id", record.Doctor_Id);
+                        commandUpdate.Parameters.AddWithValue("@Patient_Id", record.Patient_Id);
+                   
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK" };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Добавление записей в Reception
+        [WebMethod(EnableSession = true)]
+        public static object CreateReception(Reception record)
+        {
+            try
+            {
+                var addedReception = record;
+
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    //READ TEXTBOX'ES
+                    var doctor_id = record.Doctor_Id;
+                    var patient_id = record.Patient_Id;
+                    var date = record.Date;
+
+                    //if (surname == "" || name == "" || position == "" || gender == "")
+                    //{
+                    //    lblError.Text = "Недостаточно данных для продолжения";
+                    //    goto MYENDADDDOCTOR;
+                    //}
+
+                    //INSERT INFORMATION
+                    c.Open();
+                    string sql = string.Format("Insert Into Reception" +
+                        "(Doctor_Id, Patient_Id, Date) Values(@Doctor_Id, @Patient_Id, @Date)");
+
+                    using (SqlCommand cmd = new SqlCommand(sql, c))
+                    {
+                        // Добавить параметры
+                        cmd.Parameters.AddWithValue("@Doctor_Id", doctor_id);
+                        cmd.Parameters.AddWithValue("@Patient_Id", patient_id);
+                        cmd.Parameters.AddWithValue("@Date", date);
+                      
+
+                        cmd.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK", Record = addedReception };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Удаление записей из Reception
+        [WebMethod(EnableSession = true)]
+        public static object DeleteReception(int Id)
+        {
+            try
+            {
+                string queryStringDelete = "DELETE FROM [Reception] WHERE [Id] = @Id";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    c.Open();
+
+                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    {
+                        //Добавить параметры
+                        commandUpdate.Parameters.AddWithValue("@Id", Id);
+
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK" };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Чтение записей из Patient
+        [WebMethod(EnableSession = true)]
+        public static object ReceptionList(int jtStartIndex, int jtPageSize, string jtSorting)
+        {
+            try
+            {
+                //Get data from database
+                int receptionCount = returnCountOfReceptions();
+                List<Reception> receptions = returnPartOfReceptionsWithSorting(jtStartIndex, jtPageSize, jtSorting);
+
+                //Return result to jTable
+                return new { Result = "OK", Records = receptions, TotalRecordCount = receptionCount };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        private static List<Reception> returnPartOfReceptionsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
+        {
+            int counterForTakeAPart = 0;
+            List<Reception> mylist = new List<Reception>();
+            //Извлекаем строчку с нужным ID из Reception и вставляем в нужные текстбоксы
+            try
+            {
+                string queryStringSelect = "SELECT * FROM Reception ORDER BY " + jtSorting + ";";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+
+                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
+                    c.Open();
+                    SqlDataReader reader = commandSelect.ExecuteReader();
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            if (counterForTakeAPart >= jtStartIndex && counterForTakeAPart < jtStartIndex + jtPageSize)
+                            {
+                                mylist.Add(new Reception
+                                {
+                                    Id = Convert.ToInt32(reader[0]),
+                                    Doctor_Id = Convert.ToInt32(reader[1]),
+                                    Patient_Id = Convert.ToInt32(reader[2]),
+                                    Date = Convert.ToDateTime(reader[3])
+                                });
+                            }
+
+                            counterForTakeAPart++;
+                        }
+                    }
+                    finally
+                    {
+                        // Always call Close when done reading.
+                        reader.Close();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+            }
+
+            return mylist;
+        }
+
+        private static int returnCountOfReceptions()
+        {
+            int CountOfReceptions = 0;
+            //Извлекаем строчку с нужным ID из Reception и вставляем в нужные текстбоксы
+            try
+            {
+                string queryStringSelect = "SELECT Count(*) FROM Reception;";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+
+                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
+                    c.Open();
+                    SqlDataReader reader = commandSelect.ExecuteReader();
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            CountOfReceptions = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                    finally
+                    {
+                        // Always call Close when done reading.
+                        reader.Close();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+            }
+
+            return CountOfReceptions;
+        }
+
+        #endregion
+
+        #region Patient methods
+
+        //Изменение записей в Patient
+        [WebMethod(EnableSession = true)]
+        public static object UpdatePatient(Patient record)
+        {
+            try
+            {
+                string queryStringDelete = "UPDATE [Patient] SET [Surname] = @Surname, [Name] = @Name, [Age] = @Age, [Gender] = @Gender, [Contraindications] = @Contraindications WHERE [Id] = @Id";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    c.Open();
+
+                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    {
+                        //Добавить параметры
+                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
+                        commandUpdate.Parameters.AddWithValue("@Surname", record.Surname);
+                        commandUpdate.Parameters.AddWithValue("@Name", record.Name);
+                        commandUpdate.Parameters.AddWithValue("@Age", record.Age);
+                        commandUpdate.Parameters.AddWithValue("@Gender", record.Gender);
+                        commandUpdate.Parameters.AddWithValue("@Contraindications", record.Contraindications);
+
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK" };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Добавление записей в Patient
+        [WebMethod(EnableSession = true)]
+        public static object CreatePatient(Patient record)
+        {
+            try
+            {
+                var addedPatient = record;
+
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    //READ TEXTBOX'ES
+                    var surname = record.Surname;
+                    var name = record.Name;
+                    var age = record.Age;
+                    var contraindications = record.Contraindications;
+                    var gender = record.Gender;
+
+                    //if (surname == "" || name == "" || position == "" || gender == "")
+                    //{
+                    //    lblError.Text = "Недостаточно данных для продолжения";
+                    //    goto MYENDADDDOCTOR;
+                    //}
+
+                    //INSERT INFORMATION
+                    c.Open();
+                    string sql = string.Format("Insert Into Patient" +
+                        "(Surname, Name, Age, Gender, Contraindications) Values(@Surname, @Name, @Age, @Gender, @Contraindications)");
+
+                    using (SqlCommand cmd = new SqlCommand(sql, c))
+                    {
+                        // Добавить параметры
+                        cmd.Parameters.AddWithValue("@Surname", surname);
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        cmd.Parameters.AddWithValue("@Age", age);
+                        cmd.Parameters.AddWithValue("@Gender", gender);
+                        cmd.Parameters.AddWithValue("@Contraindications", contraindications);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK", Record = addedPatient };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Удаление записей из Patient
+        [WebMethod(EnableSession = true)]
+        public static object DeletePatient(int Id)
+        {
+            try
+            {
+                string queryStringDelete = "DELETE FROM [Patient] WHERE [Id] = @Id";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    c.Open();
+
+                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    {
+                        //Добавить параметры
+                        commandUpdate.Parameters.AddWithValue("@Id", Id);
+
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                };
+
+                return new { Result = "OK" };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        //Чтение записей из Patient
+        [WebMethod(EnableSession = true)]
+        public static object PatientList(int jtStartIndex, int jtPageSize, string jtSorting)
+        {
+            try
+            {
+                //Get data from database
+                int patientCount = returnCountOfPatients();
+                List<Patient> patients = returnPartOfPatientsWithSorting(jtStartIndex, jtPageSize, jtSorting);
+
+                //Return result to jTable
+                return new { Result = "OK", Records = patients, TotalRecordCount = patientCount };
+            }
+            catch (Exception ex)
+            {
+                return new { Result = "ERROR", Message = ex.Message };
+            }
+        }
+
+        private static List<Patient> returnPartOfPatientsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
+        {
+            int counterForTakeAPart = 0;
+            List<Patient> mylist = new List<Patient>();
+            //Извлекаем строчку с нужным ID из Patient и вставляем в нужные текстбоксы
+            try
+            {
+                string queryStringSelect = "SELECT * FROM Patient ORDER BY " + jtSorting + ";";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+
+                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
+                    c.Open();
+                    SqlDataReader reader = commandSelect.ExecuteReader();
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            if (counterForTakeAPart >= jtStartIndex && counterForTakeAPart < jtStartIndex + jtPageSize)
+                            {
+                                mylist.Add(new Patient
+                                {
+                                    Id = Convert.ToInt32(reader[0]),
+                                    Surname = reader[1].ToString(),
+                                    Name = reader[2].ToString(),
+                                    Age = Convert.ToInt32(reader[3]),
+                                    Gender = reader[4].ToString(),
+                                    Contraindications = reader[5].ToString()
+                                });
+                            }
+
+                            counterForTakeAPart++;
+                        }
+                    }
+                    finally
+                    {
+                        // Always call Close when done reading.
+                        reader.Close();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+            }
+
+            return mylist;
+        }
+
+        private static int returnCountOfPatients()
+        {
+            int CountOfPatients = 0;
+            //Извлекаем строчку с нужным ID из Patient и вставляем в нужные текстбоксы
+            try
+            {
+                string queryStringSelect = "SELECT Count(*) FROM Patient;";
+                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+
+                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
+                    c.Open();
+                    SqlDataReader reader = commandSelect.ExecuteReader();
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            CountOfPatients = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                    finally
+                    {
+                        // Always call Close when done reading.
+                        reader.Close();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+            }
+
+            return CountOfPatients;
+        }
+
+        #endregion
 
         #region Doctor methods
 

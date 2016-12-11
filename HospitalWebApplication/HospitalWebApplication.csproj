@@ -370,6 +370,7 @@
     <Content Include="Scripts\jtable\themes\metro\purple\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\red\jtable.less" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
+    <Content Include="Scripts\jtable\localization\jquery.jtables.myRussianLocalization.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

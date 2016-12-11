@@ -46,7 +46,7 @@
     <script type="text/javascript" src="Scripts/MyScripts/rainyday.js"></script>
 
     <link href="/Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <link href="/Scripts/jtable/themes/lightcolor/red/jtable.css" rel="stylesheet" type="text/css" />
+    <link href="/Scripts/jtable/themes/metro/darkorange/jtable.css" rel="stylesheet" type="text/css" />
     <script src="/Scripts/modernizr-2.6.2.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="Scripts/jquery-ui-1.10.0.js"></script>
@@ -59,6 +59,9 @@
     <!-- ASP.NET Web Forms extension for jTable -->
     <script type="text/javascript" src="/Scripts/jtable/extensions/jquery.jtable.aspnetpagemethods.js"></script>
 
+    <!-- Localization -->
+    <script type="text/javascript" src="/Scripts/jtable/localization/jquery.jtables.myRussianLocalization.js"></script>  
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -67,8 +70,16 @@
         <!-- Класс, в котором выводятся таблицы -->
         <div class="first">
 
-            <!-- Сюда будет встраиваться JTables таблица -->
-            <div id="DoctorTableContainer" style="width: 650px;"></div>
+
+            <!-- Таблица, благодаря которой задаётся положение на странице-->
+            <!-- Сюда будут встраиваться JTables таблицы и т.п.-->
+            <table class="tftable">
+            
+              <!-- ROW:1 COL:1 -->  <tr><td>  <div id="DoctorTableContainer" style="width: 650px;"></div> 
+              <!-- ROW:1 COL:2 -->  </td><td> ... </td></tr>
+              <!-- ROW:2 COL:1 -->  <tr><td> <div id="PatientTableContainer" style="width: 650px;"></div> </td>
+              <!-- ROW:2 COL:2 -->  <td> <div id="ReceptionTableContainer" style="width: 650px;"></div> </td></tr>
+            </table> 
 
             <!-- Описание JTables таблицы с помощью JS -->
             <script type="text/javascript">
@@ -76,10 +87,11 @@
 
                     //Prepare jtable plugin
                     $('#DoctorTableContainer').jtable({
-                        title: 'Doctor',
+                        title: 'Доктора',
                         paging: true, //Enables paging
                         pageSize: 10, //Actually this is not needed since default value is 10.
                         sorting: true, //Enables sorting
+
                         
                         defaultSorting: 'Surname ASC', //Optional. Default sorting on first load.
                         actions: {
@@ -90,30 +102,31 @@
                         },
                         fields: {
                             Id: {
+                                title: 'ID',
                                 key: true,
                                 create: false,
                                 edit: false,
-                                list: false
+                                list: true
                             },
                             Surname: {
-                                title: 'Surname',
+                                title: 'Фамилия',
                                 width: '23%'
                             },
                             Name: {
-                                title: 'Name',
+                                title: 'Имя',
                                 width: '23%'
                             },
                             Age: {
-                                title: 'Age',
+                                title: 'Возраст',
                                 width: '10%'
                             },
                             Gender: {
-                                title: 'Gender',
+                                title: 'Пол',
                                 width: '15%',
-                                options: { 'Male': 'Male', 'Female': 'Female' }
+                                options: { 'Male': 'Мужской', 'Female': 'Женский' }
                             },
                             Position: {
-                                title: 'Position',
+                                title: 'Должность',
                                 width: '25%'
                             }
                         }
@@ -126,22 +139,113 @@
             </script>
 
 
+            <!-- Описание JTables таблицы с помощью JS -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    //Prepare jtable plugin
+                    $('#PatientTableContainer').jtable({
+                        title: 'Пациенты',
+                        paging: true, //Enables paging
+                        pageSize: 10, //Actually this is not needed since default value is 10.
+                        sorting: true, //Enables sorting
+                        
+                        defaultSorting: 'Surname ASC', //Optional. Default sorting on first load.
+                        actions: {
+                            listAction: '/HospitalWebForm.aspx/PatientList',
+                            createAction: '/HospitalWebForm.aspx/CreatePatient',
+                            updateAction: '/HospitalWebForm.aspx/UpdatePatient',
+                            deleteAction: '/HospitalWebForm.aspx/DeletePatient'
+                        },
+                        fields: {
+                            Id: {
+                                title: 'ID',
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: true
+                            },
+                            Surname: {
+                                title: 'Фамилия',
+                                width: '23%'
+                            },
+                            Name: {
+                                title: 'Имя',
+                                width: '23%'
+                            },
+                            Age: {
+                                title: 'Возраст',
+                                width: '10%'
+                            },
+                            Gender: {
+                                title: 'Пол',
+                                width: '15%',
+                                options: { 'Male': 'Мужской', 'Female': 'Женский' }
+                            },
+                            Contraindications: {
+                                title: 'Противопоказания',
+                                width: '25%'
+                            }
+                        }
+                    });
+
+                    //Load doctors list from server
+                    $('#PatientTableContainer').jtable('load');
+                });
+
+            </script>
 
 
+            <!-- Описание JTables таблицы с помощью JS -->
+            <script type="text/javascript">
+                $(document).ready(function () {
 
-            <br />
-            <!-- Перенос строки-->
-            <br />
-            <br />
+                    //Prepare jtable plugin
+                    $('#ReceptionTableContainer').jtable({
+                        title: 'Приёмы',
+                        paging: true, //Enables paging
+                        pageSize: 10, //Actually this is not needed since default value is 10.
+                        sorting: true, //Enables sorting
+                        
+                        defaultSorting: 'Doctor_Id ASC', //Optional. Default sorting on first load.
+                        actions: {
+                            listAction: '/HospitalWebForm.aspx/ReceptionList',
+                            createAction: '/HospitalWebForm.aspx/CreateReception',
+                            updateAction: '/HospitalWebForm.aspx/UpdateReception',
+                            deleteAction: '/HospitalWebForm.aspx/DeleteReception'
+                        },
+                        fields: {
+                            Id: {
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: false
+                            },
+                            Doctor_Id: {
+                                title: 'ID доктора',
+                                width: '23%'
+                            },
+                            Patient_Id: {
+                                title: 'ID пациента',
+                                width: '23%'
+                            },
+                            Date: {
+                                title: 'Дата приёма',
+                                width: '25%',
+                                type: 'date',
+                                displayFormat: 'dd MM yy',
+                                edit: false
+                            }
+                        }
+                    });
 
+                    //Load doctors list from server
+                    $('#ReceptionTableContainer').jtable('load');
+                });
 
-            <br />
-            <!-- Перенос строки-->
-            <br />
-            <br />
+            </script>
 
  
-
         </div>
 
         <!-- Вывод фонового динамического изображения -->
@@ -154,7 +258,7 @@
                         var engine = new RainyDay({
                             image: this
                         });
-                        engine.rain([[1, 2, 8000]]);
+                        //engine.rain([[1, 2, 10]]);
                         engine.rain([[3, 3, 0.88], [5, 5, 0.9], [6, 2, 1]], 100);
                     };
                     image.crossOrigin = 'anonymous';
