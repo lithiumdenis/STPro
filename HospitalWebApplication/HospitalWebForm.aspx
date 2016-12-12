@@ -34,6 +34,15 @@
             width: 100%;
             height: 100%;
         }
+
+        .clockContainer {
+            width: 100%;
+            display:inline-block;
+            vertical-align: top;
+            text-align:right;
+            
+        }
+
     </style>
 
     <!-- Для Background изображения -->
@@ -62,6 +71,9 @@
     <!-- Localization -->
     <script type="text/javascript" src="/Scripts/jtable/localization/jquery.jtables.myRussianLocalization.js"></script>  
 
+    <!-- Clock -->
+    <script type="text/javascript" src="/Scripts/jquery.thooClock.js"></script>  
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -76,10 +88,33 @@
             <table class="tftable">
             
               <!-- ROW:1 COL:1 -->  <tr><td>  <div id="DoctorTableContainer" style="width: 650px;"></div> 
-              <!-- ROW:1 COL:2 -->  </td><td> ... </td></tr>
+              <!-- ROW:1 COL:2 -->  </td><td> <div class="clockContainer"> <div id="myclock"></div> </div> </td></tr>
               <!-- ROW:2 COL:1 -->  <tr><td> <div id="PatientTableContainer" style="width: 650px;"></div> </td>
               <!-- ROW:2 COL:2 -->  <td> <div id="ReceptionTableContainer" style="width: 650px;"></div> </td></tr>
             </table> 
+
+
+            <script type="text/javascript">
+                var intVal, myclock;
+
+                $(document).ready(function () {
+
+                    //clock plugin constructor
+                    $('#myclock').thooClock({
+                        size: 280,
+                        showNumerals: true,
+                        secondHandColor: '#FF8C00',
+                        brandText: 'Lithiumdenis',
+                        brandText2: 'Russia',
+                        onEverySecond: function () {
+                            //callback that should be fired every second
+                        }
+                    });
+
+                });
+
+            </script>
+                
 
             <!-- Описание JTables таблицы с помощью JS -->
             <script type="text/javascript">

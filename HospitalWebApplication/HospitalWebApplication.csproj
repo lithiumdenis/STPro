@@ -172,6 +172,7 @@
     </Content>
     <Content Include="HospitalWebForm.aspx" />
     <Content Include="MyControls\WebUserControlEditPageTop.ascx" />
+    <Content Include="Scripts\jquery.thooClock.js" />
     <Content Include="Scripts\MyScripts\errorHandling.js" />
     <Content Include="Scripts\MyScripts\rainyday.js" />
     <Content Include="Scripts\MyScripts\TemplateLoader.js" />
