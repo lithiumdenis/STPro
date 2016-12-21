@@ -269,7 +269,7 @@
                                 width: '25%',
                                 type: 'date',
                                 displayFormat: 'dd MM yy',
-                                edit: false
+                                edit: true
                             }
                         }
                     });

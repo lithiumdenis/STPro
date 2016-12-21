@@ -26,21 +26,21 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "UPDATE [Reception] SET [Doctor_Id] = @Doctor_Id, [Patient_Id] = @Patient_Id WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
-
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    var foundReception = ctx.Reception.FirstOrDefault(s => s.Id == record.Id);
+                    if (foundReception == null)
                     {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
-                        commandUpdate.Parameters.AddWithValue("@Doctor_Id", record.Doctor_Id);
-                        commandUpdate.Parameters.AddWithValue("@Patient_Id", record.Patient_Id);
-                   
-                        commandUpdate.ExecuteNonQuery();
+                        throw new Exception("Запись не найдена!");
                     }
-                };
+
+                    foundReception.Doctor_Id = record.Doctor_Id;
+                    foundReception.Patient_Id = record.Patient_Id;
+                    foundReception.Date = record.Date;
+           
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
                 return new { Result = "OK" };
             }
@@ -56,39 +56,14 @@ namespace HospitalWebApplication
         {
             try
             {
-                var addedReception = record;
-
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    //READ TEXTBOX'ES
-                    var doctor_id = record.Doctor_Id;
-                    var patient_id = record.Patient_Id;
-                    var date = record.Date;
+                    ctx.Reception.Add(record);
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
-                    //if (surname == "" || name == "" || position == "" || gender == "")
-                    //{
-                    //    lblError.Text = "Недостаточно данных для продолжения";
-                    //    goto MYENDADDDOCTOR;
-                    //}
-
-                    //INSERT INFORMATION
-                    c.Open();
-                    string sql = string.Format("Insert Into Reception" +
-                        "(Doctor_Id, Patient_Id, Date) Values(@Doctor_Id, @Patient_Id, @Date)");
-
-                    using (SqlCommand cmd = new SqlCommand(sql, c))
-                    {
-                        // Добавить параметры
-                        cmd.Parameters.AddWithValue("@Doctor_Id", doctor_id);
-                        cmd.Parameters.AddWithValue("@Patient_Id", patient_id);
-                        cmd.Parameters.AddWithValue("@Date", date);
-                      
-
-                        cmd.ExecuteNonQuery();
-                    }
-                };
-
-                return new { Result = "OK", Record = addedReception };
+                return new { Result = "OK", Record = record };
             }
             catch (Exception ex)
             {
@@ -102,19 +77,16 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "DELETE FROM [Reception] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
+                    //Выглядит странно, но это так и делается
+                    Reception deleteThis = new Reception() { Id = Id };
+                    ctx.Reception.Attach(deleteThis);
+                    ctx.Reception.Remove(deleteThis);
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", Id);
-
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
                 return new { Result = "OK" };
             }
@@ -145,49 +117,76 @@ namespace HospitalWebApplication
 
         private static List<Reception> returnPartOfReceptionsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
         {
-            int counterForTakeAPart = 0;
+            //int counterForTakeAPart = 0;
             List<Reception> mylist = new List<Reception>();
-            //Извлекаем строчку с нужным ID из Reception и вставляем в нужные текстбоксы
-            try
+
+            //Это работает, но громоздко, мягко говоря. Зато context и LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                string queryStringSelect = "SELECT * FROM Reception ORDER BY " + jtSorting + ";";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                var query = from a in ctx.Reception select a;
+
+                // Сортировка
+
+                //sort by Doctor_Id
+                if (string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Doctor_Id ASC"))
                 {
+                    query = query.OrderBy(p => p.Doctor_Id);
+                }
+                else if (jtSorting.Equals("Doctor_Id DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Doctor_Id);
+                }
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
+                //sort by Patient_Id
+                else if(string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Patient_Id ASC"))
+                {
+                    query = query.OrderBy(p => p.Patient_Id);
+                }
+                else if (jtSorting.Equals("Patient_Id DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Patient_Id);
+                }
+
+                //sort by Id
+                else if(string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Id ASC"))
+                {
+                    query = query.OrderBy(p => p.Id);
+                }
+                else if (jtSorting.Equals("Id DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Id);
+                }
+
+                //sort by Date
+                else if(string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Date ASC"))
+                {
+                    query = query.OrderBy(p => p.Date);
+                }
+                else if (jtSorting.Equals("Date DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Date);
+                }
+
+                //Default
+                else
+                {
+                    query = query.OrderBy(p => p.Date);
+                }
+
+                var result = query.Skip(jtStartIndex).Take(jtPageSize).ToList(); //Paging
+
+                //Иначе некорректная связь с Reception генерируется. Пересоздаём
+                for (int i = 0; i < result.Count; i++)
+                    mylist.Add(new Reception
                     {
-                        while (reader.Read())
-                        {
-                            if (counterForTakeAPart >= jtStartIndex && counterForTakeAPart < jtStartIndex + jtPageSize)
-                            {
-                                mylist.Add(new Reception
-                                {
-                                    Id = Convert.ToInt32(reader[0]),
-                                    Doctor_Id = Convert.ToInt32(reader[1]),
-                                    Patient_Id = Convert.ToInt32(reader[2]),
-                                    Date = Convert.ToDateTime(reader[3])
-                                });
-                            }
+                        Id = result[i].Id,
+                        Patient_Id = result[i].Patient_Id,
+                        Doctor_Id = result[i].Doctor_Id,
+                        Date = result[i].Date
+                    });
 
-                            counterForTakeAPart++;
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
+                return mylist;
             }
-            catch (Exception ex)
-            {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
-
-            return mylist;
         }
 
         private static int returnCountOfReceptions()
@@ -197,7 +196,7 @@ namespace HospitalWebApplication
             //using context and LINQ
             using (var ctx = new HospitalDatabaseEntities())
             {
-                CountOfReceptions = (from a in ctx.Reception select a).Count();
+                CountOfReceptions = ctx.Reception.Count();
             }
 
             return CountOfReceptions;
@@ -213,24 +212,23 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "UPDATE [Patient] SET [Surname] = @Surname, [Name] = @Name, [Age] = @Age, [Gender] = @Gender, [Contraindications] = @Contraindications WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
-
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    var foundPatient = ctx.Patient.FirstOrDefault(s => s.Id == record.Id);
+                    if (foundPatient == null)
                     {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
-                        commandUpdate.Parameters.AddWithValue("@Surname", record.Surname);
-                        commandUpdate.Parameters.AddWithValue("@Name", record.Name);
-                        commandUpdate.Parameters.AddWithValue("@Age", record.Age);
-                        commandUpdate.Parameters.AddWithValue("@Gender", record.Gender);
-                        commandUpdate.Parameters.AddWithValue("@Contraindications", record.Contraindications);
-
-                        commandUpdate.ExecuteNonQuery();
+                        throw new Exception("Запись не найдена!");
                     }
-                };
+
+                    foundPatient.Surname = record.Surname;
+                    foundPatient.Name = record.Name;
+                    foundPatient.Age = record.Age;
+                    foundPatient.Gender = record.Gender;
+                    foundPatient.Contraindications = record.Contraindications;
+
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
                 return new { Result = "OK" };
             }
@@ -246,42 +244,14 @@ namespace HospitalWebApplication
         {
             try
             {
-                var addedPatient = record;
-
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    //READ TEXTBOX'ES
-                    var surname = record.Surname;
-                    var name = record.Name;
-                    var age = record.Age;
-                    var contraindications = record.Contraindications;
-                    var gender = record.Gender;
+                    ctx.Patient.Add(record);
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
-                    //if (surname == "" || name == "" || position == "" || gender == "")
-                    //{
-                    //    lblError.Text = "Недостаточно данных для продолжения";
-                    //    goto MYENDADDDOCTOR;
-                    //}
-
-                    //INSERT INFORMATION
-                    c.Open();
-                    string sql = string.Format("Insert Into Patient" +
-                        "(Surname, Name, Age, Gender, Contraindications) Values(@Surname, @Name, @Age, @Gender, @Contraindications)");
-
-                    using (SqlCommand cmd = new SqlCommand(sql, c))
-                    {
-                        // Добавить параметры
-                        cmd.Parameters.AddWithValue("@Surname", surname);
-                        cmd.Parameters.AddWithValue("@Name", name);
-                        cmd.Parameters.AddWithValue("@Age", age);
-                        cmd.Parameters.AddWithValue("@Gender", gender);
-                        cmd.Parameters.AddWithValue("@Contraindications", contraindications);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                };
-
-                return new { Result = "OK", Record = addedPatient };
+                return new { Result = "OK", Record = record };
             }
             catch (Exception ex)
             {
@@ -295,19 +265,16 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "DELETE FROM [Patient] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
+                    //Выглядит странно, но это так и делается
+                    Patient deleteThis = new Patient() { Id = Id };
+                    ctx.Patient.Attach(deleteThis);
+                    ctx.Patient.Remove(deleteThis);
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", Id);
-
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
                 return new { Result = "OK" };
             }
@@ -338,51 +305,98 @@ namespace HospitalWebApplication
 
         private static List<Patient> returnPartOfPatientsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
         {
-            int counterForTakeAPart = 0;
+            //int counterForTakeAPart = 0;
             List<Patient> mylist = new List<Patient>();
-            //Извлекаем строчку с нужным ID из Patient и вставляем в нужные текстбоксы
-            try
+
+            //Это работает, но громоздко, мягко говоря. Зато context и LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                string queryStringSelect = "SELECT * FROM Patient ORDER BY " + jtSorting + ";";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                var query = from a in ctx.Patient select a;
+
+                // Сортировка
+
+                //sort by name
+                if (string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Name ASC"))
                 {
+                    query = query.OrderBy(p => p.Name);
+                }
+                else if (jtSorting.Equals("Name DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Name);
+                }
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
+                //sort by gender
+                else if (jtSorting.Equals("Gender ASC"))
+                {
+                    query = query.OrderBy(p => p.Gender);
+                }
+                else if (jtSorting.Equals("Gender DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Gender);
+                }
+
+                //sort by surname
+                else if (jtSorting.Equals("Surname ASC"))
+                {
+                    query = query.OrderBy(p => p.Surname);
+                }
+                else if (jtSorting.Equals("Surname DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Surname);
+                }
+
+                //sort by id
+                else if (jtSorting.Equals("Id ASC"))
+                {
+                    query = query.OrderBy(p => p.Id);
+                }
+                else if (jtSorting.Equals("Id DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Id);
+                }
+
+                //sort by age
+                else if (jtSorting.Equals("Age ASC"))
+                {
+                    query = query.OrderBy(p => p.Age);
+                }
+                else if (jtSorting.Equals("Age DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Age);
+                }
+
+                //sort by position
+                else if (jtSorting.Equals("Contraindications ASC"))
+                {
+                    query = query.OrderBy(p => p.Contraindications);
+                }
+                else if (jtSorting.Equals("Contraindications DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Contraindications);
+                }
+
+                //Default
+                else
+                {
+                    query = query.OrderBy(p => p.Surname);
+                }
+
+                var result = query.Skip(jtStartIndex).Take(jtPageSize).ToList(); //Paging
+
+                //Иначе некорректная связь с Reception генерируется. Пересоздаём
+                for (int i = 0; i < result.Count; i++)
+                    mylist.Add(new Patient
                     {
-                        while (reader.Read())
-                        {
-                            if (counterForTakeAPart >= jtStartIndex && counterForTakeAPart < jtStartIndex + jtPageSize)
-                            {
-                                mylist.Add(new Patient
-                                {
-                                    Id = Convert.ToInt32(reader[0]),
-                                    Surname = reader[1].ToString(),
-                                    Name = reader[2].ToString(),
-                                    Age = Convert.ToInt32(reader[3]),
-                                    Gender = reader[4].ToString(),
-                                    Contraindications = reader[5].ToString()
-                                });
-                            }
+                        Age = result[i].Age,
+                        Gender = result[i].Gender,
+                        Id = result[i].Id,
+                        Name = result[i].Name,
+                        Contraindications = result[i].Contraindications,
+                        Surname = result[i].Surname
+                    });
 
-                            counterForTakeAPart++;
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
+                return mylist;
             }
-            catch (Exception ex)
-            {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
-
-            return mylist;
         }
 
         private static int returnCountOfPatients()
@@ -392,7 +406,7 @@ namespace HospitalWebApplication
             //using context and LINQ
             using (var ctx = new HospitalDatabaseEntities())
             {
-                CountOfPatients = (from a in ctx.Patient select a).Count();
+                CountOfPatients = ctx.Patient.Count();
             }
 
             return CountOfPatients;
@@ -408,25 +422,24 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "UPDATE [Doctor] SET [Surname] = @Surname, [Name] = @Name, [Age] = @Age, [Gender] = @Gender, [Position] = @Position WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
-
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
+                    var foundDoctor = ctx.Doctor.FirstOrDefault(s => s.Id == record.Id);
+                    if(foundDoctor == null)
                     {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", record.Id);
-                        commandUpdate.Parameters.AddWithValue("@Surname", record.Surname);
-                        commandUpdate.Parameters.AddWithValue("@Name", record.Name);
-                        commandUpdate.Parameters.AddWithValue("@Age", record.Age);
-                        commandUpdate.Parameters.AddWithValue("@Gender", record.Gender);
-                        commandUpdate.Parameters.AddWithValue("@Position", record.Position);
-
-                        commandUpdate.ExecuteNonQuery();
+                        throw new Exception("Запись не найдена!");
                     }
-                };
 
+                    foundDoctor.Surname = record.Surname;
+                    foundDoctor.Name = record.Name;
+                    foundDoctor.Age = record.Age;
+                    foundDoctor.Gender = record.Gender;
+                    foundDoctor.Position = record.Position;
+
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
+                
                 return new { Result = "OK" };
             }
             catch (Exception ex)
@@ -441,42 +454,14 @@ namespace HospitalWebApplication
         {
             try
             {
-                var addedDoctor = record;
-
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    //READ TEXTBOX'ES
-                    var surname = record.Surname;
-                    var name = record.Name;
-                    var age = record.Age;
-                    var position = record.Position;
-                    var gender = record.Gender;
+                    ctx.Doctor.Add(record);
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
-                    //if (surname == "" || name == "" || position == "" || gender == "")
-                    //{
-                    //    lblError.Text = "Недостаточно данных для продолжения";
-                    //    goto MYENDADDDOCTOR;
-                    //}
-
-                    //INSERT INFORMATION
-                    c.Open();
-                    string sql = string.Format("Insert Into Doctor" +
-                        "(Surname, Name, Age, Gender, Position) Values(@Surname, @Name, @Age, @Gender, @Position)");
-
-                    using (SqlCommand cmd = new SqlCommand(sql, c))
-                    {
-                        // Добавить параметры
-                        cmd.Parameters.AddWithValue("@Surname", surname);
-                        cmd.Parameters.AddWithValue("@Name", name);
-                        cmd.Parameters.AddWithValue("@Age", age);
-                        cmd.Parameters.AddWithValue("@Gender", gender);
-                        cmd.Parameters.AddWithValue("@Position", position);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                };
-
-                return new { Result = "OK", Record = addedDoctor };
+                return new { Result = "OK", Record = record };
             }
             catch (Exception ex)
             {
@@ -490,19 +475,16 @@ namespace HospitalWebApplication
         {
             try
             {
-                string queryStringDelete = "DELETE FROM [Doctor] WHERE [Id] = @Id";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                //using context and LINQ
+                using (var ctx = new HospitalDatabaseEntities())
                 {
-                    c.Open();
+                    //Выглядит странно, но это так и делается
+                    Doctor deleteThis = new Doctor() { Id = Id };
+                    ctx.Doctor.Attach(deleteThis);
+                    ctx.Doctor.Remove(deleteThis);
 
-                    using (SqlCommand commandUpdate = new SqlCommand(queryStringDelete, c))
-                    {
-                        //Добавить параметры
-                        commandUpdate.Parameters.AddWithValue("@Id", Id);
-
-                        commandUpdate.ExecuteNonQuery();
-                    }
-                };
+                    ctx.SaveChanges(); //Иначе ничего не сохраняет в БД из контекста
+                }
 
                 return new { Result = "OK" };
             }
@@ -531,144 +513,103 @@ namespace HospitalWebApplication
             }
         }
 
+        //Чтение страницы с сортировкой из Doctor
         private static List<Doctor> returnPartOfDoctorsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
         {
             List<Doctor> mylist = new List<Doctor>();
-            int counterForTakeAPart = 0;
 
-            //Извлекаем строчку с нужным ID из Doctor и вставляем в нужные текстбоксы
-            try
+            //Это работает, но громоздко, мягко говоря. Зато context и LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                string queryStringSelect = "SELECT * FROM Doctor ORDER BY " + jtSorting + ";";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                var query = from a in ctx.Doctor select a;
+
+                // Сортировка
+
+                //sort by name
+                if (string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Name ASC"))
                 {
+                    query = query.OrderBy(p => p.Name);
+                }
+                else if (jtSorting.Equals("Name DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Name);
+                }
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
+                //sort by gender
+                else if (jtSorting.Equals("Gender ASC"))
+                {
+                    query = query.OrderBy(p => p.Gender);
+                }
+                else if (jtSorting.Equals("Gender DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Gender);
+                }
+
+                //sort by surname
+                else if (jtSorting.Equals("Surname ASC"))
+                {
+                    query = query.OrderBy(p => p.Surname);
+                }
+                else if (jtSorting.Equals("Surname DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Surname);
+                }
+
+                //sort by id
+                else if (jtSorting.Equals("Id ASC"))
+                {
+                    query = query.OrderBy(p => p.Id);
+                }
+                else if (jtSorting.Equals("Id DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Id);
+                }
+
+                //sort by age
+                else if (jtSorting.Equals("Age ASC"))
+                {
+                    query = query.OrderBy(p => p.Age);
+                }
+                else if (jtSorting.Equals("Age DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Age);
+                }
+
+                //sort by position
+                else if (jtSorting.Equals("Position ASC"))
+                {
+                    query = query.OrderBy(p => p.Position);
+                }
+                else if (jtSorting.Equals("Position DESC"))
+                {
+                    query = query.OrderByDescending(p => p.Position);
+                }
+
+                //Default
+                else
+                {
+                    query = query.OrderBy(p => p.Surname);
+                }
+
+                var result = query.Skip(jtStartIndex).Take(jtPageSize).ToList(); //Paging
+
+                //Иначе некорректная связь с Reception генерируется. Пересоздаём
+                for (int i = 0; i < result.Count; i++)
+                    mylist.Add(new Doctor
                     {
-                        while (reader.Read())
-                        {
-                            if (counterForTakeAPart >= jtStartIndex && counterForTakeAPart < jtStartIndex + jtPageSize)
-                            {
-                                mylist.Add(new Doctor
-                                {
-                                    Id = Convert.ToInt32(reader[0]),
-                                    Surname = reader[1].ToString(),
-                                    Name = reader[2].ToString(),
-                                    Age = Convert.ToInt32(reader[3]),
-                                    Gender = reader[4].ToString(),
-                                    Position = reader[5].ToString()
-                                });
-                            }
+                        Age = result[i].Age,
+                        Gender = result[i].Gender,
+                        Id = result[i].Id,
+                        Name = result[i].Name,
+                        Position = result[i].Position,
+                        Surname = result[i].Surname
+                    });
 
-                            counterForTakeAPart++;
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
+                return mylist;
             }
-            catch (Exception ex)
-            {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
-            }
-
-            return mylist;
-
-
-            //Это работает, но громоздко
-            ////using context and LINQ
-            //using (var ctx = new HospitalDatabaseEntities())
-            //{
-            //    var query = from a in ctx.Doctor select a;
-
-            //    //Sorting
-            //    //This ugly code is used just for demonstration.
-            //    //Normally, Incoming sorting text can be directly appended to an SQL query.
-
-            //    //sort by name
-            //    if (string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Name ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Name);
-            //    }
-            //    else if (jtSorting.Equals("Name DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Name);
-            //    }
-
-            //    //sort by gender
-            //    else if (jtSorting.Equals("Gender ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Gender);
-            //    }
-            //    else if (jtSorting.Equals("Gender DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Gender);
-            //    }
-
-            //    //sort by surname
-            //    else if (jtSorting.Equals("Surname ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Surname);
-            //    }
-            //    else if (jtSorting.Equals("Surname DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Surname);
-            //    }
-
-            //    //sort by id
-            //    else if (jtSorting.Equals("Id ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Id);
-            //    }
-            //    else if (jtSorting.Equals("Id DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Id);
-            //    }
-
-            //    //sort by age
-            //    else if (jtSorting.Equals("Age ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Age);
-            //    }
-            //    else if (jtSorting.Equals("Age DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Age);
-            //    }
-
-            //    //sort by position
-            //    else if (jtSorting.Equals("Position ASC"))
-            //    {
-            //        query = query.OrderBy(p => p.Position);
-            //    }
-            //    else if (jtSorting.Equals("Position DESC"))
-            //    {
-            //        query = query.OrderByDescending(p => p.Position);
-            //    }
-
-            //    //Default!
-            //    else
-            //    {
-            //        query = query.OrderBy(p => p.Name);
-            //    }
-
-
-            //    var result = query.Skip(jtStartIndex).Take(jtPageSize).ToList(); //Paging
-
-            //    //Иначе некорректная связь с Reception генерируется. Пересоздаём
-            //    for (int i = 0; i < result.Count; i++)
-            //        mylist.Add(new Doctor { Age = result[i].Age, Gender = result[i].Gender, Id = result[i].Id, Name = result[i].Name,
-            //         Position = result[i].Position, Surname = result[i].Surname} );
-
-            //    return mylist;
-            //}
         }
 
+        //Количество Doctor в таблице
         private static int returnCountOfDoctors()
         {
             int CountOfDoctors = 0;
@@ -676,7 +617,7 @@ namespace HospitalWebApplication
             //using context and LINQ
             using (var ctx = new HospitalDatabaseEntities())
             {
-                CountOfDoctors = (from a in ctx.Doctor select a).Count();
+                CountOfDoctors = ctx.Doctor.Count();
             }
 
             return CountOfDoctors;
