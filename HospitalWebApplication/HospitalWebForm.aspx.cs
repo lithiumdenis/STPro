@@ -193,33 +193,11 @@ namespace HospitalWebApplication
         private static int returnCountOfReceptions()
         {
             int CountOfReceptions = 0;
-            //Извлекаем строчку с нужным ID из Reception и вставляем в нужные текстбоксы
-            try
-            {
-                string queryStringSelect = "SELECT Count(*) FROM Reception;";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            CountOfReceptions = Convert.ToInt32(reader[0]);
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
-            }
-            catch (Exception ex)
+            //using context and LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+                CountOfReceptions = (from a in ctx.Reception select a).Count();
             }
 
             return CountOfReceptions;
@@ -410,33 +388,11 @@ namespace HospitalWebApplication
         private static int returnCountOfPatients()
         {
             int CountOfPatients = 0;
-            //Извлекаем строчку с нужным ID из Patient и вставляем в нужные текстбоксы
-            try
-            {
-                string queryStringSelect = "SELECT Count(*) FROM Patient;";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            CountOfPatients = Convert.ToInt32(reader[0]);
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
-            }
-            catch (Exception ex)
+            //using context and LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+                CountOfPatients = (from a in ctx.Patient select a).Count();
             }
 
             return CountOfPatients;
@@ -557,7 +513,6 @@ namespace HospitalWebApplication
         }
 
         //Чтение записей из Doctor
-
         [WebMethod(EnableSession = true)]
         public static object DoctorList(int jtStartIndex, int jtPageSize, string jtSorting)
         {
@@ -578,8 +533,9 @@ namespace HospitalWebApplication
 
         private static List<Doctor> returnPartOfDoctorsWithSorting(int jtStartIndex, int jtPageSize, string jtSorting)
         {
-            int counterForTakeAPart = 0;
             List<Doctor> mylist = new List<Doctor>();
+            int counterForTakeAPart = 0;
+
             //Извлекаем строчку с нужным ID из Doctor и вставляем в нужные текстбоксы
             try
             {
@@ -623,38 +579,104 @@ namespace HospitalWebApplication
             }
 
             return mylist;
+
+
+            //Это работает, но громоздко
+            ////using context and LINQ
+            //using (var ctx = new HospitalDatabaseEntities())
+            //{
+            //    var query = from a in ctx.Doctor select a;
+
+            //    //Sorting
+            //    //This ugly code is used just for demonstration.
+            //    //Normally, Incoming sorting text can be directly appended to an SQL query.
+
+            //    //sort by name
+            //    if (string.IsNullOrEmpty(jtSorting) || jtSorting.Equals("Name ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Name);
+            //    }
+            //    else if (jtSorting.Equals("Name DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Name);
+            //    }
+
+            //    //sort by gender
+            //    else if (jtSorting.Equals("Gender ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Gender);
+            //    }
+            //    else if (jtSorting.Equals("Gender DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Gender);
+            //    }
+
+            //    //sort by surname
+            //    else if (jtSorting.Equals("Surname ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Surname);
+            //    }
+            //    else if (jtSorting.Equals("Surname DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Surname);
+            //    }
+
+            //    //sort by id
+            //    else if (jtSorting.Equals("Id ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Id);
+            //    }
+            //    else if (jtSorting.Equals("Id DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Id);
+            //    }
+
+            //    //sort by age
+            //    else if (jtSorting.Equals("Age ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Age);
+            //    }
+            //    else if (jtSorting.Equals("Age DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Age);
+            //    }
+
+            //    //sort by position
+            //    else if (jtSorting.Equals("Position ASC"))
+            //    {
+            //        query = query.OrderBy(p => p.Position);
+            //    }
+            //    else if (jtSorting.Equals("Position DESC"))
+            //    {
+            //        query = query.OrderByDescending(p => p.Position);
+            //    }
+
+            //    //Default!
+            //    else
+            //    {
+            //        query = query.OrderBy(p => p.Name);
+            //    }
+
+
+            //    var result = query.Skip(jtStartIndex).Take(jtPageSize).ToList(); //Paging
+
+            //    //Иначе некорректная связь с Reception генерируется. Пересоздаём
+            //    for (int i = 0; i < result.Count; i++)
+            //        mylist.Add(new Doctor { Age = result[i].Age, Gender = result[i].Gender, Id = result[i].Id, Name = result[i].Name,
+            //         Position = result[i].Position, Surname = result[i].Surname} );
+
+            //    return mylist;
+            //}
         }
 
         private static int returnCountOfDoctors()
         {
             int CountOfDoctors = 0;
-            //Извлекаем строчку с нужным ID из Doctor и вставляем в нужные текстбоксы
-            try
-            {
-                string queryStringSelect = "SELECT Count(*) FROM Doctor;";
-                using (var c = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-                {
 
-                    SqlCommand commandSelect = new SqlCommand(queryStringSelect, c);
-                    c.Open();
-                    SqlDataReader reader = commandSelect.ExecuteReader();
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            CountOfDoctors = Convert.ToInt32(reader[0]);
-                        }
-                    }
-                    finally
-                    {
-                        // Always call Close when done reading.
-                        reader.Close();
-                    }
-                };
-            }
-            catch (Exception ex)
+            //using context and LINQ
+            using (var ctx = new HospitalDatabaseEntities())
             {
-                //lblError.Text = string.Format("Ошибка: {0}", ex.Message);
+                CountOfDoctors = (from a in ctx.Doctor select a).Count();
             }
 
             return CountOfDoctors;
