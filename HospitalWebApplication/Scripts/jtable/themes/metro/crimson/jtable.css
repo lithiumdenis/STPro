@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
@@ -45,7 +45,7 @@
   font-style: italic;
   font-weight: 700;
   src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/PRmiXeptR36kaC0GEAetxoUt79146ZFaIJxILcpzmhI.woff) format('woff');
-}
+}*/
 div.jtable-main-container {
   position: relative;
 }
@@ -265,7 +265,7 @@ div.jtable-contextmenu-overlay {
   z-index: 100;
 }
 div.jtable-main-container {
-  font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   font-size: 14px;
   background: #fff;
@@ -276,7 +276,7 @@ div.jtable-main-container > div.jtable-title {
   padding-left: 10px;
 }
 div.jtable-main-container > div.jtable-title div.jtable-title-text {
-  font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   font-size: 19px;
   line-height: 34px;
@@ -306,7 +306,7 @@ div.jtable-main-container > table.jtable > thead {
   background-color: #c30000;
 }
 div.jtable-main-container > table.jtable > thead th {
-  font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   font-size: 15px;
   color: #fff;
@@ -426,12 +426,12 @@ div.jtable-main-container > div.jtable-bottom-panel span.jtable-add-record a {
   color: #fff;
 }
 form.jtable-dialog-form {
-  font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 400;
   font-size: 14px;
 }
 div.jtable-busy-message {
-  font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   font-size: 16px;
   border: 1px solid #fff;

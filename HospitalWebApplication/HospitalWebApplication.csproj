@@ -73,9 +73,7 @@
     <Content Include="App_Data\HospitalDatabase_log.ldf">
       <DependentUpon>HospitalDatabase.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\highlight.css" />
     <Content Include="Content\images\autumn.jpg" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -138,28 +136,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="Content\themes\metroblue\images\ui-icons_2d89ef_0.png" />
-    <Content Include="Content\themes\metroblue\images\ui-icons_525252_0.png" />
-    <Content Include="Content\themes\metroblue\images\ui-icons_66B3FF_0.png" />
-    <Content Include="Content\themes\metroblue\images\ui-icons_d4d4d4_0.png" />
-    <Content Include="Content\themes\metroblue\images\ui-icons_ffffff_0.png" />
-    <Content Include="Content\themes\metroblue\jquery-ui.css" />
-    <Content Include="Content\themes\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
-    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_217bc0_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_469bdd_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_6da8d5_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
-    <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
-    <Content Include="Content\themes\redmond\jquery-ui-1.8.16.custom.css" />
     <Content Include="HospitalEntityFrameworkModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HospitalEntityFrameworkModel.edmx</DependentUpon>
@@ -173,16 +149,19 @@
     <Content Include="HospitalWebForm.aspx" />
     <Content Include="MyControls\WebUserControlEditPageTop.ascx" />
     <Content Include="Scripts\jquery.thooClock.js" />
-    <Content Include="Scripts\MyScripts\errorHandling.js" />
-    <Content Include="Scripts\MyScripts\rainyday.js" />
-    <Content Include="Scripts\MyScripts\TemplateLoader.js" />
+    <Content Include="Scripts\MyScripts\analogClockSettings.js" />
+    <Content Include="Scripts\MyScripts\JTableDoctorSettings.js" />
+    <Content Include="Scripts\MyScripts\JTablePatientSettings.js" />
+    <Content Include="Scripts\MyScripts\JTableReceptionSettings.js" />
+    <Content Include="Scripts\MyScripts\rainStartSettings.js" />
+    <Content Include="Scripts\MyScripts\StyleSheetHospitalWebForm.css" />
+    <Content Include="Scripts\rainyday.js" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.0.js" />
     <Content Include="Scripts\jquery-ui-1.10.0.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.min.js" />
-    <Content Include="Scripts\jquery.tmpl.js" />
     <Content Include="Scripts\jtablesite.js" />
     <Content Include="Scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.js" />
     <Content Include="Scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.min.js" />
@@ -190,60 +169,12 @@
     <Content Include="Scripts\jtable\external\json2.min.js" />
     <Content Include="Scripts\jtable\jquery.jtable.js" />
     <Content Include="Scripts\jtable\jquery.jtable.min.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.es.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.lt.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.pl.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.pt-BR.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.pt-PT.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.tr.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.vi.js" />
-    <Content Include="Scripts\jtable\localization\jquery.jtable.zh-CN.js" />
-    <Content Include="Scripts\jtable\themes\basic\close.png" />
-    <Content Include="Scripts\jtable\themes\basic\column-asc.png" />
-    <Content Include="Scripts\jtable\themes\basic\column-desc.png" />
-    <Content Include="Scripts\jtable\themes\basic\column-sortable.png" />
-    <Content Include="Scripts\jtable\themes\basic\delete.png" />
-    <Content Include="Scripts\jtable\themes\basic\edit.png" />
-    <Content Include="Scripts\jtable\themes\basic\jtable_basic.css" />
-    <Content Include="Scripts\jtable\themes\basic\jtable_basic.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\bg-thead.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\blue\jtable.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\blue\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\blue\loading.gif" />
-    <Content Include="Scripts\jtable\themes\lightcolor\close.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\column-asc.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\column-desc.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\column-sortable.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\delete.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\edit.png" />
-    <Content Include="Scripts\jtable\themes\lightcolor\gray\jtable.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\gray\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\gray\loading.gif" />
-    <Content Include="Scripts\jtable\themes\lightcolor\green\jtable.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\green\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\green\loading.gif" />
-    <Content Include="Scripts\jtable\themes\lightcolor\orange\jtable.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\orange\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\orange\loading.gif" />
-    <Content Include="Scripts\jtable\themes\lightcolor\red\jtable.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\red\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\lightcolor\red\loading.gif" />
-    <Content Include="Scripts\jtable\themes\metro\blue\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\blue\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\blue\loading.gif" />
-    <Content Include="Scripts\jtable\themes\metro\brown\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\brown\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\brown\loading.gif" />
     <Content Include="Scripts\jtable\themes\metro\close.png" />
     <Content Include="Scripts\jtable\themes\metro\column-asc.png" />
     <Content Include="Scripts\jtable\themes\metro\column-desc.png" />
     <Content Include="Scripts\jtable\themes\metro\column-sortable.png" />
     <Content Include="Scripts\jtable\themes\metro\crimson\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\crimson\jtable.min.css" />
     <Content Include="Scripts\jtable\themes\metro\crimson\loading.gif" />
-    <Content Include="Scripts\jtable\themes\metro\darkgray\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\darkgray\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\darkgray\loading.gif" />
     <Content Include="Scripts\jtable\themes\metro\darkorange\jtable.css" />
     <Content Include="Scripts\jtable\themes\metro\darkorange\jtable.min.css" />
     <Content Include="Scripts\jtable\themes\metro\darkorange\loading.gif" />
@@ -254,31 +185,18 @@
     <Content Include="Scripts\jtable\themes\metro\green\loading.gif" />
     <Content Include="Scripts\jtable\themes\metro\jtable_metro_base.css" />
     <Content Include="Scripts\jtable\themes\metro\jtable_metro_base.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\lightgray\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\lightgray\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\lightgray\loading.gif" />
     <Content Include="Scripts\jtable\themes\metro\pink\jtable.css" />
     <Content Include="Scripts\jtable\themes\metro\pink\jtable.min.css" />
     <Content Include="Scripts\jtable\themes\metro\pink\loading.gif" />
     <Content Include="Scripts\jtable\themes\metro\purple\jtable.css" />
     <Content Include="Scripts\jtable\themes\metro\purple\jtable.min.css" />
     <Content Include="Scripts\jtable\themes\metro\purple\loading.gif" />
-    <Content Include="Scripts\jtable\themes\metro\red\jtable.css" />
-    <Content Include="Scripts\jtable\themes\metro\red\jtable.min.css" />
-    <Content Include="Scripts\jtable\themes\metro\red\loading.gif" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Templates\error.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WebFormAddNewDoctor.aspx" />
-    <Content Include="WebFormAddNewPatient.aspx" />
-    <Content Include="WebFormAddNewReception.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreFunc.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Doctor.cs">
       <DependentUpon>HospitalEntityFrameworkModel.tt</DependentUpon>
     </Compile>
@@ -318,27 +236,6 @@
     <Compile Include="Reception.cs">
       <DependentUpon>HospitalEntityFrameworkModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WebFormAddNewDoctor.aspx.cs">
-      <DependentUpon>WebFormAddNewDoctor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebFormAddNewDoctor.aspx.designer.cs">
-      <DependentUpon>WebFormAddNewDoctor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebFormAddNewPatient.aspx.cs">
-      <DependentUpon>WebFormAddNewPatient.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebFormAddNewPatient.aspx.designer.cs">
-      <DependentUpon>WebFormAddNewPatient.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebFormAddNewReception.aspx.cs">
-      <DependentUpon>WebFormAddNewReception.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebFormAddNewReception.aspx.designer.cs">
-      <DependentUpon>WebFormAddNewReception.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -351,25 +248,13 @@
     <Content Include="HospitalEntityFrameworkModel.edmx.diagram">
       <DependentUpon>HospitalEntityFrameworkModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Scripts\jtable\themes\basic\jtable_basic.less" />
     <Content Include="Scripts\jtable\themes\jtable_theme_base.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\blue\jtable.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\gray\jtable.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\green\jtable.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\jtable_lightcolor_base.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\orange\jtable.less" />
-    <Content Include="Scripts\jtable\themes\lightcolor\red\jtable.less" />
-    <Content Include="Scripts\jtable\themes\metro\blue\jtable.less" />
-    <Content Include="Scripts\jtable\themes\metro\brown\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\crimson\jtable.less" />
-    <Content Include="Scripts\jtable\themes\metro\darkgray\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\darkorange\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\green\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\jtable_metro_base.less" />
-    <Content Include="Scripts\jtable\themes\metro\lightgray\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\pink\jtable.less" />
     <Content Include="Scripts\jtable\themes\metro\purple\jtable.less" />
-    <Content Include="Scripts\jtable\themes\metro\red\jtable.less" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Scripts\jtable\localization\jquery.jtables.myRussianLocalization.js" />
     <None Include="Web.Debug.config">
