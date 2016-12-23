@@ -4,8 +4,8 @@
         var engine = new RainyDay({
             image: this
         });
-        //engine.rain([[1, 2, 10]]); 
-        engine.rain([[3, 3, 0.88], [5, 5, 0.9], [6, 2, 1]], 100);
+        //engine.rain([[0, 2, 200], [3, 3, 1]], 100);
+        engine.rain([[3, 3, 0.1]], 33);
     };
     image.crossOrigin = 'anonymous';
     image.src = '/Content/images/autumn.jpg';

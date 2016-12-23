@@ -56,39 +56,28 @@
             </script>
         </div>
 
-
         <!-- Поле для вывода ошибки -->
         <asp:Label ID="lblError" CssClass="cc" runat="server" ForeColor="Red"></asp:Label>
 
         <!-- Класс, в котором выводятся таблицы -->
         <div class="first">
+            <div class="firstInner">
 
-            <!-- Таблица, благодаря которой задаётся положение объектов на странице-->
-            <table class="tftable">
-                <tr>
-                    <td>
-                        <!-- ROW:1 COL:1 -->
-                        <div id="DoctorTableContainer" style="width: 650px;"></div>
-                    </td>
-                    <td>
-                        <!-- ROW:1 COL:2 -->
-                        <div class="clockContainer">
-                            <div id="myclock"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <!-- ROW:2 COL:1 -->
-                        <div id="PatientTableContainer" style="width: 650px;"></div>
-                    </td>
+                <!-- Таблица, благодаря которой задаётся положение объектов на странице-->
+                <div class="left">
+                    <div id="DoctorTableContainer"></div>
+                    <br />
+                    <div id="PatientTableContainer"></div>
+                </div>
 
-                    <td>
-                        <!-- ROW:2 COL:2 -->
-                        <div id="ReceptionTableContainer" style="width: 650px;"></div>
-                    </td>
-                </tr>
-            </table>
+                <div class="right">
+                    <div id="ReceptionTableContainer"></div>
+                    <br />
+                    <div class="clockContainer">
+                        <div id="myclock"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </body>

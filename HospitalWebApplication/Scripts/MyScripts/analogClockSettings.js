@@ -5,6 +5,8 @@
         size: 280,
         showNumerals: true,
         secondHandColor: '#FF8C00',
+        dialColor: '#000000',
+        dialBackgroundColor: '#FFFFFF',  //transparent
         brandText: 'Lithiumdenis',
         brandText2: 'Russia',
         onEverySecond: function () {
